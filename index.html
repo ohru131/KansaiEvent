@@ -2,107 +2,319 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>関西イベントカレンダー</title>
 <meta name="description" content="関西のIT勉強会・ワークショップ・サイエンスカフェ・講座・読書会・教育・ウクレレ・語学交流・ハイキング・アート等のイベントを毎日更新するカレンダー">
+<meta name="theme-color" content="#4f46e5">
+<meta property="og:title" content="関西イベントカレンダー">
+<meta property="og:description" content="関西の勉強会・講座・交流会・ハイキング・アートなどを毎日更新">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">
 <style>
-:root{color-scheme:light dark}
+:root{
+ color-scheme:light dark;
+ --bg:#f6f7fb;--surface:#fff;--surface-2:#f1f3f9;--text:#1c2033;--muted:#5d6480;--line:#e3e6ef;
+ --accent:#4f46e5;--accent-2:#7c3aed;--accent-soft:#eef0ff;--sun:#dc2626;--sat:#2563eb;
+ --shadow:0 1px 2px rgba(20,24,50,.06),0 4px 16px rgba(20,24,50,.06);--radius:14px;
+}
+@media (prefers-color-scheme:dark){:root{
+ --bg:#0f1220;--surface:#171b2e;--surface-2:#1f2440;--text:#e8eaf6;--muted:#9aa1c2;--line:#2a3050;
+ --accent:#818cf8;--accent-2:#a78bfa;--accent-soft:#252a52;--sun:#f87171;--sat:#60a5fa;
+ --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.5}
-header{padding:12px 16px;border-bottom:1px solid #8884}
-header h1{font-size:20px;margin:0}
-header p{margin:4px 0 0;font-size:13px;opacity:.75}
-main{max-width:900px;margin:0 auto;padding:12px}
-.controls{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
-.controls select,.controls button{font-size:15px;padding:8px;border-radius:8px;border:1px solid #8886;background:transparent;color:inherit}
-.nav{display:flex;align-items:center;gap:8px;margin:8px 0}
-.nav b{font-size:17px}
-.nav button{margin-left:auto;font-size:14px;padding:6px 10px;border-radius:8px;border:1px solid #8886;background:transparent;color:inherit}
-.nav button:first-child{margin-left:0}
-table.cal{width:100%;border-collapse:collapse;table-layout:fixed}
-table.cal th,table.cal td{border:1px solid #8883;padding:4px;vertical-align:top;font-size:12px;height:64px}
-table.cal th{height:auto;text-align:center}
-td .d{font-weight:700;font-size:13px}
-td.sel{outline:2px solid #2b6cb0;outline-offset:-2px}
-td.today .d{background:#2b6cb0;color:#fff;border-radius:50%;display:inline-block;width:22px;height:22px;text-align:center;line-height:22px}
-td .n{opacity:.8}
-#list h2{font-size:17px;margin:16px 0 8px}
-.card{border:1px solid #8884;border-radius:10px;padding:10px 12px;margin:8px 0}
-.card h3{margin:0 0 4px;font-size:16px}
-.card p{margin:2px 0;font-size:14px;opacity:.85}
-.card a{font-weight:600}
-.empty{opacity:.7;padding:12px 0}
-footer{padding:16px;font-size:12px;opacity:.7;text-align:center}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;line-height:1.6}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* header */
+.hero{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 55%,#db2777 100%);color:#fff;padding:28px 16px 64px}
+.hero-in{max-width:1080px;margin:0 auto}
+.hero h1{margin:0;font-size:clamp(22px,4.4vw,32px);letter-spacing:.02em;font-weight:800}
+.hero p{margin:6px 0 0;opacity:.9;font-size:14px}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.stat{background:rgba(255,255,255,.16);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;font-size:13px}
+.stat b{font-size:15px;margin-right:2px}
+
+main{max-width:1080px;margin:-44px auto 0;padding:0 12px 24px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+/* filters */
+.filters{padding:14px;position:sticky;top:8px;z-index:5}
+@media (max-width:860px){.filters{position:static}}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.search{flex:1 1 220px;position:relative}
+.search input{width:100%;padding:10px 12px 10px 36px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.55}
+select,.btn{padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer}
+.btn:hover,select:hover{border-color:var(--accent)}
+.toggle{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer;user-select:none;font-size:14px}
+.toggle input{accent-color:var(--accent);margin:0}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:thin}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer;white-space:nowrap}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.chip small{color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.chip[aria-pressed="true"] .dot{background:#fff}
+.chip[aria-pressed="true"] small{color:#fffc}
+
+/* layout */
+.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:1fr}}
+
+/* calendar */
+.cal-wrap{padding:14px}
+.cal-wrap{position:sticky;top:132px}
+@media (max-width:860px){.cal-wrap{position:static}}
+.nav{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.nav h2{margin:0 auto 0 4px;font-size:19px}
+.icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer;display:grid;place-items:center;font-size:16px}
+.icon-btn:hover{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dow{text-align:center;font-size:12px;font-weight:700;color:var(--muted);padding:2px 0}
+.dow.sun{color:var(--sun)}.dow.sat{color:var(--sat)}
+.day{position:relative;aspect-ratio:1/1.05;min-height:48px;border-radius:10px;border:1px solid transparent;background:var(--surface-2);padding:5px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:transform .08s,border-color .15s}
+.day:hover{border-color:var(--accent)}
+.day:active{transform:scale(.97)}
+.day.blank{background:transparent;cursor:default;pointer-events:none}
+.day .num{font-size:13px;font-weight:700;line-height:1}
+.day.sun .num{color:var(--sun)}.day.sat .num{color:var(--sat)}
+.day.past{opacity:.45}
+.day.today .num{background:var(--accent);color:#fff;border-radius:999px;padding:3px 6px;align-self:flex-start}
+.day.sel{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
+.day .heat{position:absolute;inset:0;background:var(--accent);opacity:var(--h,0);pointer-events:none;border-radius:inherit}
+.day .num,.day .meta{position:relative}
+.day .meta{display:flex;align-items:flex-end;justify-content:space-between;gap:2px}
+.day .cnt{font-size:11px;font-weight:700;color:var(--accent)}
+.dots{display:flex;flex-wrap:wrap;gap:2px;max-width:70%}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--c)}
+@media (max-width:480px){.dots{display:none}.day{min-height:42px;padding:4px}.day .cnt{font-size:10px}}
+.legend{margin-top:10px;font-size:12px;color:var(--muted)}
+
+/* list */
+.list-wrap{padding:14px}
+.tabs{display:flex;background:var(--surface-2);border-radius:10px;padding:3px;margin-bottom:12px}
+.tab{flex:1;border:0;background:transparent;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:14px;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--text);font-weight:700;box-shadow:var(--shadow)}
+.date-h{display:flex;align-items:baseline;gap:8px;margin:14px 0 8px;font-size:16px}
+.date-h:first-child{margin-top:0}
+.date-h span{font-size:13px;color:var(--muted);font-weight:400}
+.card{display:grid;grid-template-columns:62px 1fr;gap:12px;padding:12px;border:1px solid var(--line);border-left:4px solid var(--c);border-radius:12px;margin:8px 0;background:var(--surface);transition:box-shadow .15s,transform .15s}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.time{font-variant-numeric:tabular-nums;text-align:center}
+.time b{display:block;font-size:17px}
+.time small{color:var(--muted);font-size:12px}
+.card h3{margin:0 0 4px;font-size:15px;line-height:1.45;word-break:break-word}
+.card h3 a{color:inherit;text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.info{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.tag{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.tag.genre{background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c);font-weight:700}
+.tag.free{background:#16a34a22;color:#16a34a;font-weight:700}
+@media (prefers-color-scheme:dark){.tag.free{color:#4ade80}}
+.go{margin-left:auto;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+.go:hover{text-decoration:underline}
+.empty{color:var(--muted);text-align:center;padding:28px 8px}
+.empty b{display:block;font-size:28px;margin-bottom:4px}
+.more{display:block;width:100%;margin-top:8px}
+footer{max-width:1080px;margin:0 auto;padding:20px 16px 36px;font-size:12px;color:var(--muted);text-align:center}
+.skeleton{height:70px;border-radius:12px;background:linear-gradient(90deg,var(--surface-2),var(--line),var(--surface-2));background-size:200% 100%;animation:sk 1.2s infinite;margin:8px 0}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<header>
-<h1>関西イベントカレンダー</h1>
-<p>KANSAI • 毎日（月〜日） <span id="updated"></span></p>
+<header class="hero">
+ <div class="hero-in">
+  <h1>📅 関西イベントカレンダー</h1>
+  <p>勉強会・講座・交流会・読書会・ハイキング・アートなど、関西のイベントを毎日更新</p>
+  <div class="stats" id="stats"></div>
+ </div>
 </header>
+
 <main>
-<div class="controls">
-<select id="genre"><option value="">ジャンル：すべて</option></select>
-<select id="source"><option value="">情報源：すべて</option></select>
-<button id="clear" type="button">絞り込みを解除</button>
-</div>
-<div class="nav">
-<button id="prev" type="button">← 前月</button>
-<b id="monthLabel"></b>
-<button id="todayBtn" type="button">今日</button>
-<button id="next" type="button">翌月 →</button>
-</div>
-<table class="cal" id="cal"></table>
-<section id="list"></section>
+ <section class="panel filters" aria-label="絞り込み">
+  <div class="row">
+   <label class="search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="キーワード・会場で検索" aria-label="キーワード検索">
+   </label>
+   <select id="source" aria-label="情報源"><option value="">情報源：すべて</option></select>
+   <label class="toggle"><input id="free" type="checkbox"> 無料のみ</label>
+   <button id="clear" class="btn" type="button">リセット</button>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="ジャンル"></div>
+ </section>
+
+ <div class="layout">
+  <section class="panel cal-wrap" aria-label="カレンダー">
+   <div class="nav">
+    <h2 id="monthLabel"></h2>
+    <button class="icon-btn" id="prev" type="button" aria-label="前月">‹</button>
+    <button class="btn" id="todayBtn" type="button">今日</button>
+    <button class="icon-btn" id="next" type="button" aria-label="翌月">›</button>
+   </div>
+   <div class="grid" id="cal"></div>
+   <div class="legend">色の濃さ＝イベント数。日付をタップでその日の一覧</div>
+  </section>
+
+  <section class="panel list-wrap" aria-label="イベント一覧">
+   <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tabDay" aria-selected="true" type="button">選択した日</button>
+    <button class="tab" role="tab" id="tabUp" aria-selected="false" type="button">これから（一覧）</button>
+   </div>
+   <div id="list"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+  </section>
+ </div>
 </main>
-<footer>各イベントの詳細・申込はリンク先の公式ページで確認してください。毎日更新。</footer>
+
+<footer>各イベントの詳細・申込はリンク先の公式ページで確認してください。情報は自動収集のため変更・誤りがある場合があります。</footer>
+
 <script>
 const DOW=["日","月","火","水","木","金","土"];
-let events=[],genres=[],sources=[],viewYM=null,selected=null;
+const PALETTE={"IT勉強会":"#2563eb","ワークショップ":"#ea580c","講座・セミナー":"#0891b2","交流会":"#db2777","語学交流":"#7c3aed","読書会":"#a16207","ハイキング":"#16a34a","教育":"#0d9488","アート":"#c026d3","作業会":"#64748b","音楽":"#e11d48"};
+const EXTRA=["#4f46e5","#65a30d","#b45309","#0284c7","#be123c"];
 const $=id=>document.getElementById(id);
-function todayStr(){const n=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0");}
-function filtered(){const g=$("genre").value,s=$("source").value;return events.filter(e=>(!g||e.genre===g)&&(!s||e.source===s));}
-function renderCal(){
- const [y,m]=viewYM.split("-").map(Number);
- $("monthLabel").textContent=y+"年"+m+"月";
- const first=new Date(y,m-1,1),last=new Date(y,m,0).getDate(),startDow=first.getDay();
- const list=filtered(),byDate={};list.forEach(e=>{byDate[e.date]=(byDate[e.date]||0)+1});
- let h="<tr>"+DOW.map(d=>"<th>"+d+"</th>").join("")+"</tr><tr>";
- for(let i=0;i<startDow;i++)h+="<td></td>";
- const t=todayStr();
- for(let d=1;d<=last;d++){
-   const ds=y+"-"+String(m).padStart(2,"0")+"-"+String(d).padStart(2,"0");
-   const dow=new Date(y,m-1,d).getDay();if(d>1&&(startDow+d-1)%7===0)h+="</tr><tr>";
-   h+='<td class="'+(ds===t?"today ":"")+(ds===selected?"sel":"")+'" data-date="'+ds+'"><span class="d">'+d+'</span>'+(byDate[ds]?'<br><span class="n">'+byDate[ds]+'件</span>':"")+"</td>";
- }
- h+="</tr>";$("cal").innerHTML=h;
- document.querySelectorAll("td[data-date]").forEach(td=>td.addEventListener("click",()=>{selected=td.dataset.date;render();}));
-}
-function renderList(){
- const list=filtered().filter(e=>e.date===selected).sort((a,b)=>(a.start||"").localeCompare(b.start||""));
- const [y,m,d]=selected.split("-").map(Number);const dow=DOW[new Date(y,m-1,d).getDay()];
- let h="<h2>"+y+"年"+m+"月"+d+"日（"+dow+"） "+list.length+"件</h2>";
- if(!list.length)h+='<p class="empty">この日のイベントは登録がありません（月〜日の毎日が収集対象です）。</p>';
- list.forEach(e=>{
-   h+='<article class="card"><h3>'+esc(e.title)+'</h3><p>'+esc(e.start||"")+(e.end?"〜"+esc(e.end):"")+' ・ '+esc(e.venue||"")+'</p><p>'+esc(e.genre||"")+' ・ '+esc(e.fee||"")+' ・ '+esc(e.source||"")+'</p>'+(e.url?'<p><a href="'+esc(e.url)+'" target="_blank" rel="noopener">申込・詳細ページ →</a></p>':"")+'</article>';
- });
- $("list").innerHTML=h;
-}
+const st={events:[],genres:[],sel:null,ym:null,genre:new Set(),view:"day",limit:60};
+
+function color(g){if(PALETTE[g])return PALETTE[g];let h=0;for(const c of String(g))h=(h*31+c.charCodeAt(0))>>>0;return EXTRA[h%EXTRA.length];}
+function pad(n){return String(n).padStart(2,"0");}
+function todayStr(){const p=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tokyo",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const g=t=>p.find(x=>x.type===t).value;return g("year")+"-"+g("month")+"-"+g("day");}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function render(){renderCal();renderList();}
-function shiftMonth(n){let [y,m]=viewYM.split("-").map(Number);m+=n;if(m<1){m=12;y--}if(m>12){m=1;y++}viewYM=y+"-"+String(m).padStart(2,"0");render();}
-$("prev").onclick=()=>shiftMonth(-1);$("next").onclick=()=>shiftMonth(1);
-$("todayBtn").onclick=()=>{selected=todayStr();viewYM=selected.slice(0,7);render();};
-$("genre").onchange=render;$("source").onchange=render;
-$("clear").onclick=()=>{$("genre").value="";$("source").value="";render();};
-selected=todayStr();viewYM=selected.slice(0,7);
-fetch("events.json").then(r=>r.json()).then(d=>{
- events=d.events||[];genres=d.genres||[];sources=d.sources||[];
- genres.forEach(g=>{const o=document.createElement("option");o.value=g;o.textContent=g;$("genre").appendChild(o);});
+function isFree(e){return /無料|free/i.test(e.fee||"");}
+function dowOf(ds){const [y,m,d]=ds.split("-").map(Number);return new Date(y,m-1,d).getDay();}
+function fmtDate(ds){const [y,m,d]=ds.split("-").map(Number);return m+"月"+d+"日（"+DOW[dowOf(ds)]+"）";}
+
+function filtered(){
+ const q=$("q").value.trim().toLowerCase(),s=$("source").value,f=$("free").checked;
+ const words=q?q.split(/\s+/):[];
+ return st.events.filter(e=>{
+  if(st.genre.size&&!st.genre.has(e.genre))return false;
+  if(s&&e.source!==s)return false;
+  if(f&&!isFree(e))return false;
+  if(words.length){const hay=[e.title,e.venue,e.genre,e.source,e.fee].join(" ").toLowerCase();if(!words.every(w=>hay.includes(w)))return false;}
+  return true;
+ });
+}
+
+function renderChips(){
+ const cnt={};st.events.forEach(e=>{cnt[e.genre]=(cnt[e.genre]||0)+1});
+ const all=`<button class="chip" type="button" data-g="" style="--c:var(--accent)" aria-pressed="${!st.genre.size}">すべて</button>`;
+ $("chips").innerHTML=all+st.genres.map(g=>`<button class="chip" type="button" data-g="${esc(g)}" style="--c:${color(g)}" aria-pressed="${st.genre.has(g)}"><span class="dot"></span>${esc(g)}<small>${cnt[g]||0}</small></button>`).join("");
+}
+
+function renderCal(list){
+ const [y,m]=st.ym.split("-").map(Number);
+ $("monthLabel").textContent=y+"年"+m+"月";
+ const last=new Date(y,m,0).getDate(),start=new Date(y,m-1,1).getDay(),t=todayStr();
+ const by={};list.forEach(e=>{(by[e.date]=by[e.date]||[]).push(e)});
+ let max=1;for(const k in by)if(k.startsWith(st.ym))max=Math.max(max,by[k].length);
+ let h=DOW.map((d,i)=>`<div class="dow${i===0?" sun":i===6?" sat":""}">${d}</div>`).join("");
+ for(let i=0;i<start;i++)h+='<div class="day blank"></div>';
+ for(let d=1;d<=last;d++){
+  const ds=y+"-"+pad(m)+"-"+pad(d),w=(start+d-1)%7,ev=by[ds]||[];
+  const cls=["day",w===0?"sun":w===6?"sat":"",ds===t?"today":"",ds===st.sel?"sel":"",ds<t?"past":""].join(" ");
+  const gs=[...new Set(ev.map(e=>e.genre))].slice(0,6);
+  const op=ev.length?(0.06+0.22*ev.length/max).toFixed(2):0;
+  h+=`<button type="button" class="${cls}" data-date="${ds}" aria-label="${m}月${d}日 ${ev.length}件"${ds===st.sel?' aria-current="date"':""}><span class="heat" style="--h:${op}"></span><span class="num">${d}</span><span class="meta"><span class="dots">${gs.map(g=>`<i style="--c:${color(g)}"></i>`).join("")}</span>${ev.length?`<span class="cnt">${ev.length}</span>`:""}</span></button>`;
+ }
+ $("cal").innerHTML=h;
+}
+
+function card(e){
+ const c=color(e.genre);
+ const title=e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>`:esc(e.title);
+ return `<article class="card" style="--c:${c}">
+  <div class="time"><b>${esc(e.start||"—")}</b>${e.end?`<small>〜${esc(e.end)}</small>`:""}</div>
+  <div>
+   <h3>${title}</h3>
+   <div class="info">${e.venue?`<span>📍 ${esc(e.venue)}</span>`:""}${e.fee?`<span>💴 ${esc(e.fee)}</span>`:""}</div>
+   <div class="tags"><span class="tag genre">${esc(e.genre||"その他")}</span>${isFree(e)?'<span class="tag free">無料</span>':""}<span class="tag">${esc(e.source||"")}</span>${e.url?`<a class="go" href="${esc(e.url)}" target="_blank" rel="noopener">詳細・申込 →</a>`:""}</div>
+  </div></article>`;
+}
+const byTime=(a,b)=>(a.date||"").localeCompare(b.date||"")||(a.start||"99").localeCompare(b.start||"99");
+
+function renderList(list){
+ let h="";
+ if(st.view==="day"){
+  const items=list.filter(e=>e.date===st.sel).sort(byTime);
+  h=`<div class="date-h">${fmtDate(st.sel)}<span>${items.length}件</span></div>`;
+  h+=items.length?items.map(card).join(""):'<div class="empty"><b>🗓️</b>この日のイベントはありません<br>（条件を変えるか、別の日を選択）</div>';
+ }else{
+  const t=todayStr(),items=list.filter(e=>e.date>=t).sort(byTime),shown=items.slice(0,st.limit);
+  let cur="";
+  shown.forEach(e=>{if(e.date!==cur){cur=e.date;const n=items.filter(x=>x.date===cur).length;h+=`<div class="date-h">${fmtDate(cur)}<span>${n}件</span></div>`;}h+=card(e);});
+  if(!items.length)h='<div class="empty"><b>🔍</b>条件に合うイベントがありません</div>';
+  if(items.length>shown.length)h+=`<button class="btn more" id="more" type="button">さらに表示（残り${items.length-shown.length}件）</button>`;
+ }
+ $("list").innerHTML=h;
+ const mb=$("more");if(mb)mb.onclick=()=>{st.limit+=60;render(false);};
+}
+
+function renderStats(list,d){
+ const t=todayStr(),up=list.filter(e=>e.date>=t);
+ const today=list.filter(e=>e.date===t).length,free=up.filter(isFree).length;
+ const upd=d&&d.updatedAt?new Date(d.updatedAt).toLocaleString("ja-JP",{timeZone:"Asia/Tokyo",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}):"";
+ $("stats").innerHTML=`<span class="stat"><b>${today}</b>件 今日</span><span class="stat"><b>${up.length}</b>件 これから</span><span class="stat"><b>${free}</b>件 無料</span>${upd?`<span class="stat">更新 ${upd}</span>`:""}`;
+}
+
+let meta=null;
+function render(resetLimit=true){
+ if(resetLimit)st.limit=60;
+ const list=filtered();
+ renderStats(list,meta);renderCal(list);renderList(list);
+ $("tabDay").setAttribute("aria-selected",st.view==="day");$("tabUp").setAttribute("aria-selected",st.view==="up");
+ saveHash();
+}
+
+function saveHash(){
+ const p=new URLSearchParams();
+ if(st.sel&&st.sel!==todayStr())p.set("d",st.sel);
+ if(st.genre.size)p.set("g",[...st.genre].join(","));
+ if($("source").value)p.set("s",$("source").value);
+ if($("q").value.trim())p.set("q",$("q").value.trim());
+ if($("free").checked)p.set("free","1");
+ if(st.view==="up")p.set("v","up");
+ const s=p.toString();history.replaceState(null,"",s?"#"+s:location.pathname+location.search);
+}
+function loadHash(){
+ const p=new URLSearchParams(location.hash.slice(1));
+ if(/^\d{4}-\d{2}-\d{2}$/.test(p.get("d")||""))st.sel=p.get("d");
+ (p.get("g")||"").split(",").filter(Boolean).forEach(g=>st.genre.add(g));
+ if(p.get("q"))$("q").value=p.get("q");
+ if(p.get("free"))$("free").checked=true;
+ if(p.get("v")==="up")st.view="up";
+ return p.get("s")||"";
+}
+
+function shiftMonth(n){let [y,m]=st.ym.split("-").map(Number);m+=n;if(m<1){m=12;y--}if(m>12){m=1;y++}st.ym=y+"-"+pad(m);render();}
+
+$("prev").onclick=()=>shiftMonth(-1);
+$("next").onclick=()=>shiftMonth(1);
+$("todayBtn").onclick=()=>{st.sel=todayStr();st.ym=st.sel.slice(0,7);st.view="day";render();};
+$("cal").addEventListener("click",ev=>{const b=ev.target.closest("[data-date]");if(!b)return;st.sel=b.dataset.date;st.view="day";render();if(matchMedia("(max-width:860px)").matches)$("list").scrollIntoView({behavior:"smooth",block:"start"});});
+$("chips").addEventListener("click",ev=>{const b=ev.target.closest(".chip");if(!b)return;const g=b.dataset.g;if(!g)st.genre.clear();else st.genre.has(g)?st.genre.delete(g):st.genre.add(g);renderChips();render();});
+$("tabDay").onclick=()=>{st.view="day";render();};
+$("tabUp").onclick=()=>{st.view="up";render();};
+let qt;$("q").addEventListener("input",()=>{clearTimeout(qt);qt=setTimeout(render,150);});
+$("source").onchange=()=>render();$("free").onchange=()=>render();
+$("clear").onclick=()=>{$("q").value="";$("source").value="";$("free").checked=false;st.genre.clear();renderChips();render();};
+document.addEventListener("keydown",e=>{if(e.target.matches("input,select,textarea"))return;if(e.key==="ArrowLeft")shiftMonth(-1);if(e.key==="ArrowRight")shiftMonth(1);if(e.key==="/"){e.preventDefault();$("q").focus();}});
+
+st.sel=todayStr();
+const srcFromHash=loadHash();
+st.ym=st.sel.slice(0,7);
+fetch("events.json",{cache:"no-cache"}).then(r=>r.json()).then(d=>{
+ meta=d;st.events=d.events||[];
+ st.genres=d.genres&&d.genres.length?d.genres:[...new Set(st.events.map(e=>e.genre).filter(Boolean))];
+ const sources=d.sources&&d.sources.length?d.sources:[...new Set(st.events.map(e=>e.source).filter(Boolean))];
  sources.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;$("source").appendChild(o);});
- if(d.updatedAt)$("updated").textContent="・ 更新: "+new Date(d.updatedAt).toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
- render();
-}).catch(()=>{$("list").innerHTML='<p class="empty">データを読み込めませんでした。</p>';});
+ if(srcFromHash)$("source").value=srcFromHash;
+ renderChips();render();
+}).catch(()=>{$("list").innerHTML='<div class="empty"><b>⚠️</b>データを読み込めませんでした</div>';});
 </script>
 </body>
 </html>
