@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>関西イベントカレンダー</title>
+<meta name="description" content="関西のIT勉強会・ワークショップ・サイエンスカフェ・講座・読書会・教育・ウクレレ・語学交流・ハイキング・アート等のイベントを毎日更新するカレンダー">
+<style>
+:root{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.5}
+header{padding:12px 16px;border-bottom:1px solid #8884}
+header h1{font-size:20px;margin:0}
+header p{margin:4px 0 0;font-size:13px;opacity:.75}
+main{max-width:900px;margin:0 auto;padding:12px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.controls select,.controls button{font-size:15px;padding:8px;border-radius:8px;border:1px solid #8886;background:transparent;color:inherit}
+.nav{display:flex;align-items:center;gap:8px;margin:8px 0}
+.nav b{font-size:17px}
+.nav button{margin-left:auto;font-size:14px;padding:6px 10px;border-radius:8px;border:1px solid #8886;background:transparent;color:inherit}
+.nav button:first-child{margin-left:0}
+table.cal{width:100%;border-collapse:collapse;table-layout:fixed}
+table.cal th,table.cal td{border:1px solid #8883;padding:4px;vertical-align:top;font-size:12px;height:64px}
+table.cal th{height:auto;text-align:center}
+td .d{font-weight:700;font-size:13px}
+td.sel{outline:2px solid #2b6cb0;outline-offset:-2px}
+td.today .d{background:#2b6cb0;color:#fff;border-radius:50%;display:inline-block;width:22px;height:22px;text-align:center;line-height:22px}
+td .n{opacity:.8}
+#list h2{font-size:17px;margin:16px 0 8px}
+.card{border:1px solid #8884;border-radius:10px;padding:10px 12px;margin:8px 0}
+.card h3{margin:0 0 4px;font-size:16px}
+.card p{margin:2px 0;font-size:14px;opacity:.85}
+.card a{font-weight:600}
+.empty{opacity:.7;padding:12px 0}
+footer{padding:16px;font-size:12px;opacity:.7;text-align:center}
+</style>
+</head>
+<body>
+<header>
+<h1>関西イベントカレンダー</h1>
+<p>KANSAI • 毎日（月〜日） <span id="updated"></span></p>
+</header>
+<main>
+<div class="controls">
+<select id="genre"><option value="">ジャンル：すべて</option></select>
+<select id="source"><option value="">情報源：すべて</option></select>
+<button id="clear" type="button">絞り込みを解除</button>
+</div>
+<div class="nav">
+<button id="prev" type="button">← 前月</button>
+<b id="monthLabel"></b>
+<button id="todayBtn" type="button">今日</button>
+<button id="next" type="button">翌月 →</button>
+</div>
+<table class="cal" id="cal"></table>
+<section id="list"></section>
+</main>
+<footer>各イベントの詳細・申込はリンク先の公式ページで確認してください。毎日更新。</footer>
+<script>
+const DOW=["日","月","火","水","木","金","土"];
+let events=[],genres=[],sources=[],viewYM=null,selected=null;
+const $=id=>document.getElementById(id);
+function todayStr(){const n=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0");}
+function filtered(){const g=$("genre").value,s=$("source").value;return events.filter(e=>(!g||e.genre===g)&&(!s||e.source===s));}
+function renderCal(){
+ const [y,m]=viewYM.split("-").map(Number);
+ $("monthLabel").textContent=y+"年"+m+"月";
+ const first=new Date(y,m-1,1),last=new Date(y,m,0).getDate(),startDow=first.getDay();
+ const list=filtered(),byDate={};list.forEach(e=>{byDate[e.date]=(byDate[e.date]||0)+1});
+ let h="<tr>"+DOW.map(d=>"<th>"+d+"</th>").join("")+"</tr><tr>";
+ for(let i=0;i<startDow;i++)h+="<td></td>";
+ const t=todayStr();
+ for(let d=1;d<=last;d++){
+   const ds=y+"-"+String(m).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+   const dow=new Date(y,m-1,d).getDay();if(d>1&&(startDow+d-1)%7===0)h+="</tr><tr>";
+   h+='<td class="'+(ds===t?"today ":"")+(ds===selected?"sel":"")+'" data-date="'+ds+'"><span class="d">'+d+'</span>'+(byDate[ds]?'<br><span class="n">'+byDate[ds]+'件</span>':"")+"</td>";
+ }
+ h+="</tr>";$("cal").innerHTML=h;
+ document.querySelectorAll("td[data-date]").forEach(td=>td.addEventListener("click",()=>{selected=td.dataset.date;render();}));
+}
+function renderList(){
+ const list=filtered().filter(e=>e.date===selected).sort((a,b)=>(a.start||"").localeCompare(b.start||""));
+ const [y,m,d]=selected.split("-").map(Number);const dow=DOW[new Date(y,m-1,d).getDay()];
+ let h="<h2>"+y+"年"+m+"月"+d+"日（"+dow+"） "+list.length+"件</h2>";
+ if(!list.length)h+='<p class="empty">この日のイベントは登録がありません（月〜日の毎日が収集対象です）。</p>';
+ list.forEach(e=>{
+   h+='<article class="card"><h3>'+esc(e.title)+'</h3><p>'+esc(e.start||"")+(e.end?"〜"+esc(e.end):"")+' ・ '+esc(e.venue||"")+'</p><p>'+esc(e.genre||"")+' ・ '+esc(e.fee||"")+' ・ '+esc(e.source||"")+'</p>'+(e.url?'<p><a href="'+esc(e.url)+'" target="_blank" rel="noopener">申込・詳細ページ →</a></p>':"")+'</article>';
+ });
+ $("list").innerHTML=h;
+}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){renderCal();renderList();}
+function shiftMonth(n){let [y,m]=viewYM.split("-").map(Number);m+=n;if(m<1){m=12;y--}if(m>12){m=1;y++}viewYM=y+"-"+String(m).padStart(2,"0");render();}
+$("prev").onclick=()=>shiftMonth(-1);$("next").onclick=()=>shiftMonth(1);
+$("todayBtn").onclick=()=>{selected=todayStr();viewYM=selected.slice(0,7);render();};
+$("genre").onchange=render;$("source").onchange=render;
+$("clear").onclick=()=>{$("genre").value="";$("source").value="";render();};
+selected=todayStr();viewYM=selected.slice(0,7);
+fetch("events.json").then(r=>r.json()).then(d=>{
+ events=d.events||[];genres=d.genres||[];sources=d.sources||[];
+ genres.forEach(g=>{const o=document.createElement("option");o.value=g;o.textContent=g;$("genre").appendChild(o);});
+ sources.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;$("source").appendChild(o);});
+ if(d.updatedAt)$("updated").textContent="・ 更新: "+new Date(d.updatedAt).toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
+ render();
+}).catch(()=>{$("list").innerHTML='<p class="empty">データを読み込めませんでした。</p>';});
+</script>
+</body>
+</html>
