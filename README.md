@@ -4,6 +4,8 @@
 IT勉強会・ワークショップ、サイエンスカフェ、講座、読書会、教育、ウクレレ、語学交流、ハイキング、アート等。
 
 - 表示: GitHub Pages（静的サイト、`index.html` + `events.json`）
+  - 公開URL: https://ohru131.github.io/KansaiEvent/
+  - デプロイ: `main` への push で GitHub Actions（`.github/workflows/pages.yml`）が自動公開。手動実行も可
 - データ: `events.json`（タイトル・日時・会場・料金・ジャンル・情報源・公式ページURL）
 - 更新: 毎朝、収集したイベントで `events.json` を差し替えてコミットします
 - 開いた日（Asia/Tokyo）が初期表示です。ジャンル・情報源で絞り込みできます
