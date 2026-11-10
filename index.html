@@ -123,12 +123,15 @@ button,input,select{font:inherit;color:inherit}
 .next button:disabled{opacity:.35;cursor:default}
 
 .acts{display:flex;gap:0;align-items:flex-start;margin-top:-4px}
-.acts button{display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:4px;background:none;cursor:pointer;color:var(--ink-2);padding:0}
-.acts button:hover{background:var(--tint);color:var(--ink)}
+.acts button,.acts a{display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:4px;background:none;cursor:pointer;color:var(--ink-2);padding:0}
+.acts button:hover,.acts a:hover{background:var(--tint);color:var(--ink)}
 .acts svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
 .acts .fav[aria-pressed="true"]{color:#e0a100}
 .acts .fav[aria-pressed="true"] svg{fill:currentColor}
 .acts .del[aria-pressed="true"]{color:var(--sun)}
+.acts .cal{color:var(--sat)}
+.store .chk{display:inline-flex;gap:6px;align-items:center;cursor:pointer;color:var(--ink)}
+.store .chk input{width:16px;height:16px;margin:0;accent-color:var(--ink)}
 
 /* 表示切替：時刻表／お気に入り／ゴミ箱 */
 .views{display:flex;gap:0;margin:18px 0 0;border-bottom:1px solid var(--rule)}
@@ -216,6 +219,7 @@ footer.wrap{margin:40px auto 0;border-top:1px solid var(--rule);padding:16px 0 4
    <button type="button" id="gsync" hidden>Googleドライブと同期</button>
    <span class="stat" id="gstat"></span>
   </div>
+  <div class="row"><label class="chk"><input type="checkbox" id="calon">★ を付けたら Googleカレンダーの登録画面を開く</label></div>
  </section>
 </main>
 
@@ -259,6 +263,7 @@ function mergeMarks(other){
 }
 const ICON_STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
 const ICON_TRASH='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5"/></svg>';
+const ICON_CAL='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6.5h15v13h-15zM4.5 10.5h15M8.5 4v4M15.5 4v4M12 13v5M9.5 15.5h5"/></svg>';
 const ICON_BACK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5M4 9h10a6 6 0 010 12h-3"/></svg>';
 
 const pad=n=>String(n).padStart(2,"0");
@@ -325,9 +330,24 @@ function renderLegend(){
  ul.innerHTML=st.genres.map(g=>`<li><button type="button" data-g="${esc(g)}" style="--c:${lineColor(g)}" aria-pressed="${st.genre.has(g)}"><span class="sw"></span>${esc(g)}<span class="n">${c[g]||0}</span></button></li>`).join("");
 }
 
+/* Googleカレンダーの予定作成画面（ログイン中のアカウントに登録。保存は利用者が押す） */
+function calUrl(e){
+ const d=(e.date||"").replace(/-/g,""),hm=t=>(t||"").replace(":","").padEnd(4,"0")+"00";
+ let dates;
+ if(!e.start)dates=d+"/"+addDays(e.date,1).replace(/-/g,"");
+ else{
+  let ed=d,et=e.end;
+  if(!et){const [h,m]=e.start.split(":").map(Number);et=pad(Math.min(h+2,23))+":"+pad(m||0);}
+  else if(et<e.start)ed=addDays(e.date,1).replace(/-/g,"");
+  dates=d+"T"+hm(e.start)+"/"+ed+"T"+hm(et);
+ }
+ const details=[e.url,e.fee&&"料金："+e.fee,e.source&&"情報源："+e.source,"（関西イベント時刻表より）"].filter(Boolean).join("\n");
+ const p=new URLSearchParams({action:"TEMPLATE",text:e.title||"",dates,ctz:"Asia/Tokyo",details,location:e.venue||""});
+ return "https://calendar.google.com/calendar/render?"+p.toString();
+}
 function evRow(e){
  const c=lineColor(e.genre),mm=e.start?e.start.split(":")[1]||"":"",mk=markOf(e),k=esc(evKey(e));
- const acts=`<div class="acts"><button type="button" class="fav" data-act="fav" data-k="${k}" aria-pressed="${mk==="fav"}" aria-label="お気に入り" title="${mk==="fav"?"お気に入りから外す":"お気に入りに入れる"}">${ICON_STAR}</button><button type="button" class="del" data-act="trash" data-k="${k}" aria-pressed="${mk==="trash"}" aria-label="${mk==="trash"?"ゴミ箱から戻す":"ゴミ箱に入れる"}" title="${mk==="trash"?"ゴミ箱から戻す":"ゴミ箱に入れる（非表示）"}">${mk==="trash"?ICON_BACK:ICON_TRASH}</button></div>`;
+ const acts=`<div class="acts"><button type="button" class="fav" data-act="fav" data-k="${k}" aria-pressed="${mk==="fav"}" aria-label="お気に入り" title="${mk==="fav"?"お気に入りから外す":"お気に入りに入れる"}">${ICON_STAR}</button>${mk==="fav"&&e.date?`<a class="cal" href="${esc(calUrl(e))}" target="_blank" rel="noopener" aria-label="Googleカレンダーに登録" title="Googleカレンダーに登録">${ICON_CAL}</a>`:""}<button type="button" class="del" data-act="trash" data-k="${k}" aria-pressed="${mk==="trash"}" aria-label="${mk==="trash"?"ゴミ箱から戻す":"ゴミ箱に入れる"}" title="${mk==="trash"?"ゴミ箱から戻す":"ゴミ箱に入れる（非表示）"}">${mk==="trash"?ICON_BACK:ICON_TRASH}</button></div>`;
  const title=e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener" style="--c:${c}">${esc(e.title)}</a>`:esc(e.title);
  const fee=e.fee?`<span class="${isFree(e)?"fee-free":""}">${esc(e.fee)}</span>`:"";
  return `<div class="ev${e.gone?" gone":""}"><div class="mm">${esc(mm)}</div><div><h3><span class="line" style="--c:${c}" title="${esc(e.genre||"")}"></span>${title}</h3><div class="sub">${e.end?`<span>${esc(e.start||"")}〜${esc(e.end)}</span>`:""}<span>${esc(e.venue||"")}</span>${fee}${e.gone?'<span class="src">掲載終了</span>':`<span class="src">${esc(e.genre||"")}／${esc(e.source||"")}</span>`}</div></div>${acts}</div>`;
@@ -419,7 +439,10 @@ $("views").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(
 $("board").addEventListener("click",e=>{
  const b=e.target.closest("[data-act]");if(!b)return;
  const k=b.dataset.k,ev=st.events.find(x=>evKey(x)===k)||Object.assign({},marks[k]);
- setMark(ev,b.dataset.act);render();
+ const adding=b.dataset.act==="fav"&&markOf(ev)!=="fav";
+ setMark(ev,b.dataset.act);
+ if(adding&&ev.date&&$("calon").checked)window.open(calUrl(ev),"_blank","noopener");
+ render();
 });
 $("calbtn").onclick=()=>{const o=$("month").classList.toggle("open");$("calbtn").setAttribute("aria-expanded",o);};
 function shiftMonth(n){let [y,m]=st.ym.split("-").map(Number);m+=n;if(m<1){m=12;y--}if(m>12){m=1;y++}st.ym=y+"-"+pad(m);render();}
@@ -487,6 +510,10 @@ if(GDRIVE_CLIENT_ID){
  $("gsync").hidden=false;
  $("gsync").onclick=async()=>{try{if(!gValid())await gAuth();await gSync();}catch(err){$("gstat").textContent="ログインできず："+err.message;}};
 }
+
+const CK=MK+".cal";
+$("calon").checked=localStorage.getItem(CK)!=="0";
+$("calon").onchange=()=>{try{localStorage.setItem(CK,$("calon").checked?"1":"0");}catch(_){}};
 
 st.sel=today();
 pruneMarks();
