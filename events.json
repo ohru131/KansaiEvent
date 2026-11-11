@@ -1,6 +1,6 @@
 {
- "updatedAt": "2026-11-09T23:38:34.094Z",
- "total": 466,
+ "updatedAt": "2026-11-11T00:45:04.000Z",
+ "total": 475,
  "genres": [
   "IT勉強会",
   "アート",
@@ -2079,6 +2079,17 @@
    "url": "https://peatix.com/event/5186479"
   },
   {
+   "title": "だっこしておはなし会",
+   "date": "2026-11-11",
+   "start": "11:00",
+   "end": "11:30",
+   "venue": "大阪市立住吉図書館多目的室",
+   "fee": "参加費不明",
+   "genre": "教育",
+   "source": "大阪市立図書館",
+   "url": "https://www.oml.city.osaka.lg.jp/key/2026/70_2026110101.html"
+  },
+  {
    "title": "第221回パワーランチイン神戸",
    "date": "2026-11-11",
    "start": "11:30",
@@ -2684,6 +2695,17 @@
    "url": "https://www.meetup.com/ja-JP/will_osaka/events/316773328/"
   },
   {
+   "title": "2026.11.14 神戸投資勉強会【in大阪】",
+   "date": "2026-11-14",
+   "start": "12:30",
+   "end": "17:00",
+   "venue": "大阪市内（参加者に別途連絡）",
+   "fee": "無料",
+   "genre": "講座・セミナー",
+   "source": "Peatix",
+   "url": "https://peatix.com/event/5157724"
+  },
+  {
    "title": "１３６回 本町デジもく会",
    "date": "2026-11-14",
    "start": "13:00",
@@ -2902,6 +2924,17 @@
    "genre": "ワークショップ",
    "source": "connpass",
    "url": "https://ai-driven-bonjin.connpass.com/event/411870/"
+  },
+  {
+   "title": "ENC Language Exchange in Kobe",
+   "date": "2026-11-14",
+   "start": "18:00",
+   "end": "19:30",
+   "venue": "Tan Consulting（神戸市中央区北長狭通3-12-3 4F）",
+   "fee": "参加費不明",
+   "genre": "語学交流",
+   "source": "Meetup",
+   "url": "https://www.meetup.com/enc-language-exchange-in-kobe/events/317351095/"
   },
   {
    "title": "🎈\"Solo Going\" Kyoto International Party🗾Mingle, Drinks & Fun! 関西 国際交流パーティー 京都",
@@ -3146,6 +3179,17 @@
    "url": "https://www.facebook.com/events/1667270731460182/"
   },
   {
+   "title": "Osaka Language Exchange: Japanese & Chinese Meetup 大阪日中交流会:中国語を話そう〜",
+   "date": "2026-11-15",
+   "start": "14:00",
+   "end": "15:30",
+   "venue": "カフェーヌ（大阪市北区芝田2-5-12）",
+   "fee": "500円",
+   "genre": "語学交流",
+   "source": "Meetup",
+   "url": "https://www.meetup.com/kyotochoha/events/317324176/"
+  },
+  {
    "title": "PECO'S Language Exchange 🇺🇸🇯🇵🇨🇳 【First timer Entrance Free・初回参加費無料】",
    "date": "2026-11-15",
    "start": "15:00",
@@ -3232,6 +3276,17 @@
    "genre": "ワークショップ",
    "source": "まちライブラリー",
    "url": "https://machi-library.org/where/detail/563/"
+  },
+  {
+   "title": "沖縄県ビジネス環境説明会・交流会 in 大阪「立地経営者に聞く、沖縄に企業が集まる本当の理由」",
+   "date": "2026-11-16",
+   "start": "15:00",
+   "end": "18:00",
+   "venue": "QUINTBRIDGE 1階（大阪府大阪市都島区東野田町4丁目15-82）",
+   "fee": "無料",
+   "genre": "講座・セミナー",
+   "source": "QUINTBRIDGE",
+   "url": "https://region.alphadrive.co.jp/news/2-JhVazq"
   },
   {
    "title": "Let's play Boardgames! Namba, Osaka 大阪難波ボードゲーム会",
@@ -3452,6 +3507,17 @@
    "genre": "ワークショップ",
    "source": "まちライブラリー",
    "url": "https://machi-library.org/where/detail/563/"
+  },
+  {
+   "title": "だっこしておはなし会",
+   "date": "2026-11-18",
+   "start": "11:00",
+   "end": "11:30",
+   "venue": "大阪市立住吉図書館多目的室",
+   "fee": "参加費不明",
+   "genre": "教育",
+   "source": "大阪市立図書館",
+   "url": "https://www.oml.city.osaka.lg.jp/key/2026/70_2026110101.html"
   },
   {
    "title": "第29回大阪市図書館フェスティバル 大阪市立図書館デジタルアーカイブにはどんな画像がありますか？",
@@ -3782,6 +3848,17 @@
    "genre": "講座・セミナー",
    "source": "connpass",
    "url": "https://aihacklabo.connpass.com/event/412154/"
+  },
+  {
+   "title": "【オフライン】Scalaわいわい勉強会 #7【京都】",
+   "date": "2026-11-20",
+   "start": "19:30",
+   "end": "22:00",
+   "venue": "はてな京都オフィス（京都市中京区烏丸通六角下ル七観音町630 読売京都ビル7F）",
+   "fee": "無料",
+   "genre": "IT勉強会",
+   "source": "connpass",
+   "url": "https://scala-tokyo.connpass.com/event/411345/"
   },
   {
    "title": "Another Kumano Kodo (もうひとつの熊野古道)🍁2-Day Hiking Trip in Wakayama🥾🌳",
@@ -4420,6 +4497,28 @@
    "genre": "読書会",
    "source": "connpass",
    "url": "https://karasuma-math.connpass.com/event/411950/"
+  },
+  {
+   "title": "ONLINE Meeting for Foreign Women to Talk about Life in Japan",
+   "date": "2026-11-23",
+   "start": "15:00",
+   "end": "16:30",
+   "venue": "オンライン",
+   "fee": "参加費不明",
+   "genre": "交流会",
+   "source": "Meetup",
+   "url": "https://www.meetup.com/kyoto-osaka-foreign-womens-meetups/events/317220084/"
+  },
+  {
+   "title": "Language Time! FREE Language Exchange",
+   "date": "2026-11-24",
+   "start": "19:00",
+   "end": "20:30",
+   "venue": "Saturate Osaka at Cosmo Twin Palace Building 6F A（大阪市城東区鴫野東3-15-8）",
+   "fee": "無料",
+   "genre": "語学交流",
+   "source": "Meetup",
+   "url": "https://www.meetup.com/saturateosaka/events/mktpztyjcpbgc/"
   },
   {
    "title": "2027年度マンダラ手帳付★神戸開催！人生100年計画セミナー",
