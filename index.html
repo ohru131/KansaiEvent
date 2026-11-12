@@ -140,6 +140,8 @@ button,input,select{font:inherit;color:inherit}
 .views button[aria-selected="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)}
 .listhead{margin:16px 0 0;font-size:14px;color:var(--ink-2)}
 .dayhead.past{opacity:.55}
+.dayhead .go{margin-left:10px;border:1px solid #ffffff99;background:transparent;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px;cursor:pointer}
+.dayhead .go:hover{background:#ffffff26}
 
 /* データ保存 */
 .store{margin-top:28px;padding:14px 16px;border:1px solid var(--rule);border-radius:4px;font-size:13px;color:var(--ink-2)}
@@ -230,7 +232,7 @@ const DOW=["日","月","火","水","木","金","土"];
 const LINE={"IT勉強会":"#2f6fdb","講座・セミナー":"#0e8a8a","ワークショップ":"#e07a10","交流会":"#d6336c","語学交流":"#7b4fd6","読書会":"#8a6a1f","ハイキング":"#2f9e44","教育":"#1c9bc4","アート":"#c2389a","作業会":"#6b7686","音楽":"#d63a2f"};
 const SPARE=["#3b5bdb","#5c940d","#b35c00","#0b7285","#a61e4d"];
 const $=id=>document.getElementById(id);
-const st={events:[],genres:[],sel:null,ym:null,genre:new Set(),meta:null,view:"all"};
+const st={events:[],genres:[],sel:null,ym:null,genre:new Set(),meta:null,view:"all",qlist:false};
 
 /* ---- お気に入り・ゴミ箱（localStorage） ----
  marks[key]={s:"fav"|"trash"|"",t:更新時刻,title,date,start,url,venue}
@@ -369,6 +371,21 @@ function markedEvents(s){
  for(const [k,m] of Object.entries(marks))if(m.s===s&&!seen.has(k))out.push({title:m.title,date:m.date,start:m.start,url:m.url,venue:m.venue,gone:true});
  return out;
 }
+function dayBlocks(list,cls,go){
+ let h="";const g=new Map();list.forEach(e=>{if(!g.has(e.date))g.set(e.date,[]);g.get(e.date).push(e);});
+ g.forEach((evs,ds)=>{const [y,m,d]=parts(ds);h+=`<div class="dayhead${cls}" style="--band:${bandOf(ds)}"><h2>${m}月${d}日（${DOW[dow(ds)]}）</h2><span class="cnt">${evs.length}件</span>${go?`<button type="button" class="go" data-date="${ds}">この日の時刻表</button>`:""}</div><div class="tt" style="--band:${bandOf(ds)}">${hours(evs)}</div>`;});
+ return h;
+}
+/* キーワード検索：今日以降の全日程から一覧 */
+function renderSearch(list){
+ const t=today(),q=$("q").value.trim();
+ const items=list.filter(e=>e.date&&e.date>=t).sort((a,b)=>a.date.localeCompare(b.date)||byTime(a,b));
+ let h=`<p class="listhead">「${esc(q)}」の検索結果：今日以降 ${items.length}件</p>`;
+ if(!items.length)h+='<div class="nothing">今日以降、条件に合うイベントはありません。<br><button type="button" id="clear2">条件をクリアする</button></div>';
+ h+=dayBlocks(items,"",true);
+ $("board").innerHTML=h;
+ const c2=$("clear2");if(c2)c2.onclick=clearAll;
+}
 function renderList(){
  const s=st.view,t=today();
  const all=markedEvents(s),items=all.filter(e=>e.gone||matches(e));
@@ -376,9 +393,7 @@ function renderList(){
  const up=items.filter(e=>e.date>=t),past=items.filter(e=>e.date<t);
  let h=`<p class="listhead">${s==="fav"?"★ を付けたイベント":"ゴミ箱のイベントは時刻表に出ない。↶ で戻す"}（${items.length}件${items.length<all.length?"／条件で絞り込み中":""}）</p>`;
  if(!items.length)h+=`<div class="nothing">${s==="fav"?"お気に入りはまだない。時刻表の ☆ で追加。":"ゴミ箱は空。"}</div>`;
- const block=(list,cls)=>{const g=new Map();list.forEach(e=>{if(!g.has(e.date))g.set(e.date,[]);g.get(e.date).push(e);});
-  g.forEach((evs,ds)=>{const [y,m,d]=parts(ds);h+=`<div class="dayhead${cls}" style="--band:${bandOf(ds)}"><h2>${m}月${d}日（${DOW[dow(ds)]}）</h2><span class="cnt">${evs.length}件</span></div><div class="tt" style="--band:${bandOf(ds)}">${hours(evs)}</div>`;});};
- block(up,"");block(past," past");
+ h+=dayBlocks(up,"")+dayBlocks(past," past");
  $("board").innerHTML=h;
 }
 
@@ -404,17 +419,18 @@ function render(){
  renderNow();renderStrip(cnt);renderMonth(cnt);
  document.querySelectorAll("#views [data-v]").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===st.view));
  $("nfav").textContent=markedEvents("fav").length;$("ntrash").textContent=markedEvents("trash").length;
- $("dnav").hidden=st.view!=="all";
- st.view==="all"?renderBoard(list):renderList();
+ const searching=st.view==="all"&&st.qlist&&$("q").value.trim();
+ $("dnav").hidden=st.view!=="all"||!!searching;
+ searching?renderSearch(list):st.view==="all"?renderBoard(list):renderList();
  saveHash();
 }
 
-function select(ds,keepMonth){st.sel=ds;st.view="all";if(!keepMonth)st.ym=ds.slice(0,7);render();}
+function select(ds,keepMonth){st.sel=ds;st.view="all";st.qlist=false;if(!keepMonth)st.ym=ds.slice(0,7);render();}
 function clearAll(){$("q").value="";$("source").value="";$("free").checked=false;st.genre.clear();renderLegend();render();}
 
 function saveHash(){
  const p=new URLSearchParams();
- if(st.sel!==today())p.set("d",st.sel);
+ if(st.sel!==today()&&!(st.qlist&&$("q").value.trim()))p.set("d",st.sel);
  if(st.genre.size)p.set("g",[...st.genre].join(","));
  if($("source").value)p.set("s",$("source").value);
  if($("q").value.trim())p.set("q",$("q").value.trim());
@@ -426,7 +442,7 @@ function loadHash(){
  const p=new URLSearchParams(location.hash.slice(1));
  if(/^\d{4}-\d{2}-\d{2}$/.test(p.get("d")||""))st.sel=p.get("d");
  (p.get("g")||"").split(",").filter(Boolean).forEach(g=>st.genre.add(g));
- if(p.get("q"))$("q").value=p.get("q");
+ if(p.get("q")){$("q").value=p.get("q");st.qlist=!p.get("d");}
  if(p.get("free"))$("free").checked=true;
  if(["fav","trash"].includes(p.get("v")))st.view=p.get("v");
  return p.get("s")||"";
@@ -437,6 +453,7 @@ $("mgrid").addEventListener("click",e=>{const b=e.target.closest("[data-date]");
 $("legend").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g;st.genre.has(g)?st.genre.delete(g):st.genre.add(g);renderLegend();render();});
 $("views").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(b){st.view=b.dataset.v;render();}});
 $("board").addEventListener("click",e=>{
+ const go=e.target.closest(".go[data-date]");if(go){select(go.dataset.date);window.scrollTo({top:$("board").offsetTop-80});return;}
  const b=e.target.closest("[data-act]");if(!b)return;
  const k=b.dataset.k,ev=st.events.find(x=>evKey(x)===k)||Object.assign({},marks[k]);
  const adding=b.dataset.act==="fav"&&markOf(ev)!=="fav";
@@ -448,7 +465,7 @@ $("calbtn").onclick=()=>{const o=$("month").classList.toggle("open");$("calbtn")
 function shiftMonth(n){let [y,m]=st.ym.split("-").map(Number);m+=n;if(m<1){m=12;y--}if(m>12){m=1;y++}st.ym=y+"-"+pad(m);render();}
 $("mprev").onclick=()=>shiftMonth(-1);$("mnext").onclick=()=>shiftMonth(1);
 $("pday").onclick=()=>select(addDays(st.sel,-1));$("nday").onclick=()=>select(addDays(st.sel,1));
-let qt;$("q").addEventListener("input",()=>{clearTimeout(qt);qt=setTimeout(render,150);});
+let qt;$("q").addEventListener("input",()=>{clearTimeout(qt);qt=setTimeout(()=>{st.qlist=!!$("q").value.trim();if(st.qlist)st.view="all";render();},150);});
 $("source").onchange=render;$("free").onchange=render;$("clear").onclick=clearAll;
 document.addEventListener("keydown",e=>{if(e.target.matches("input,select,textarea"))return;if(e.key==="ArrowLeft")select(addDays(st.sel,-1));if(e.key==="ArrowRight")select(addDays(st.sel,1));if(e.key==="/"){e.preventDefault();$("q").focus();}});
 
