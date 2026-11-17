@@ -123,6 +123,8 @@ button,input,select{font:inherit;color:inherit}
 .sub{font-size:13px;color:var(--ink-2);margin-top:2px;display:flex;flex-wrap:wrap;gap:2px 16px}
 .sub .fee-free{color:var(--ink);font-weight:700}
 .sub .src{margin-left:auto}
+.sub .newtag{color:var(--sun);font-weight:700}
+.addhead{margin:20px 0 0;font-size:15px;font-weight:700}
 .undated .hh{font-size:13px;font-family:var(--jp);font-weight:700;padding-top:12px}
 .nothing{padding:28px 16px;text-align:center;color:var(--ink-2)}
 .nothing button{margin-top:10px;border:1px solid var(--rule);background:var(--paper);border-radius:4px;padding:6px 14px;cursor:pointer;color:var(--ink)}
@@ -221,6 +223,7 @@ footer.wrap{margin:40px auto 0;border-top:1px solid var(--rule);padding:16px 0 4
 
  <div class="views" id="views" role="tablist" aria-label="表示">
   <button type="button" role="tab" data-v="all" aria-selected="true">時刻表</button>
+  <button type="button" role="tab" data-v="new" aria-selected="false">新着<span class="n" id="nnew">0</span></button>
   <button type="button" role="tab" data-v="fav" aria-selected="false">★ お気に入り<span class="n" id="nfav">0</span></button>
   <button type="button" role="tab" data-v="trash" aria-selected="false">ゴミ箱<span class="n" id="ntrash">0</span></button>
  </div>
@@ -366,7 +369,7 @@ function evRow(e){
  const acts=`<div class="acts"><button type="button" class="fav" data-act="fav" data-k="${k}" aria-pressed="${mk==="fav"}" aria-label="お気に入り" title="${mk==="fav"?"お気に入りから外す":"お気に入りに入れる"}">${ICON_STAR}</button>${mk==="fav"&&e.date?`<a class="cal" href="${esc(calUrl(e))}" target="_blank" rel="noopener" aria-label="Googleカレンダーに登録" title="Googleカレンダーに登録">${ICON_CAL}</a>`:""}<button type="button" class="del" data-act="trash" data-k="${k}" aria-pressed="${mk==="trash"}" aria-label="${mk==="trash"?"ゴミ箱から戻す":"ゴミ箱に入れる"}" title="${mk==="trash"?"ゴミ箱から戻す":"ゴミ箱に入れる（非表示）"}">${mk==="trash"?ICON_BACK:ICON_TRASH}</button></div>`;
  const title=e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener" style="--c:${c}">${esc(e.title)}</a>`:esc(e.title);
  const fee=e.fee?`<span class="${isFree(e)?"fee-free":""}">${esc(e.fee)}</span>`:"";
- return `<div class="ev${e.gone?" gone":""}"><div class="mm">${esc(mm)}</div><div><h3><span class="line" style="--c:${c}" title="${esc(e.genre||"")}"></span>${title}</h3><div class="sub">${e.end?`<span>${esc(e.start||"")}〜${esc(e.end)}</span>`:""}<span>${esc(e.venue||"")}</span>${fee}${e.gone?'<span class="src">掲載終了</span>':`<span class="src">${esc(e.genre||"")}／${esc(e.source||"")}</span>`}</div></div>${acts}</div>`;
+ return `<div class="ev${e.gone?" gone":""}"><div class="mm">${esc(mm)}</div><div><h3><span class="line" style="--c:${c}" title="${esc(e.genre||"")}"></span>${title}</h3><div class="sub">${e.end?`<span>${esc(e.start||"")}〜${esc(e.end)}</span>`:""}<span>${esc(e.venue||"")}</span>${fee}${isNew(e)?`<span class="newtag">新着・${esc(e.added.slice(5).replace("-","/"))}追加</span>`:""}${e.gone?'<span class="src">掲載終了</span>':`<span class="src">${esc(e.genre||"")}／${esc(e.source||"")}</span>`}</div></div>${acts}</div>`;
 }
 
 function hours(items){
@@ -384,6 +387,23 @@ function markedEvents(s){
  st.events.forEach(e=>{if(markOf(e)===s){seen.add(evKey(e));out.push(e);}});
  for(const [k,m] of Object.entries(marks))if(m.s===s&&!seen.has(k))out.push({title:m.title,date:m.date,start:m.start,url:m.url,venue:m.venue,gone:true});
  return out;
+}
+/* 新着：追加日（added）が記録されたイベント。記録開始は2026-11-17、それより前の追加分には日付がない */
+const newCutoff=()=>addDays(today(),-13);
+function newEvents(){return st.events.filter(e=>e.added&&e.added>=newCutoff()&&markOf(e)!=="trash");}
+function isNew(e){return !!(e.added&&e.added>=newCutoff());}
+function renderNew(){
+ const all=newEvents(),items=all.filter(matches);
+ items.sort((a,b)=>(a.date||"").localeCompare(b.date||"")||byTime(a,b));
+ let h=`<p class="listhead">最近追加されたイベント（追加日順・直近2週間分／${items.length}件${items.length<all.length?"／条件で絞り込み中":""}）</p>`;
+ if(!items.length)h+='<div class="nothing">新着はまだありません。毎朝の更新で追加されたイベントがここに出ます。</div>';
+ const g=new Map();items.forEach(e=>{if(!g.has(e.added))g.set(e.added,[]);g.get(e.added).push(e);});
+ [...g.keys()].sort().reverse().forEach(ad=>{
+  const [y,m,d]=parts(ad),evs=g.get(ad);
+  h+=`<p class="addhead">${m}月${d}日（${DOW[dow(ad)]}）に追加 ・ ${evs.length}件</p>`;
+  h+=dayBlocks(evs,"",true);
+ });
+ $("board").innerHTML=h;
 }
 function dayBlocks(list,cls,go){
  let h="";const g=new Map();list.forEach(e=>{if(!g.has(e.date))g.set(e.date,[]);g.get(e.date).push(e);});
@@ -436,12 +456,12 @@ function render(){
  const list=filtered(),cnt=countBy(list);
  renderNow();renderStrip(cnt);renderMonth(cnt);
  document.querySelectorAll("#views [data-v]").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===st.view));
- $("nfav").textContent=markedEvents("fav").length;$("ntrash").textContent=markedEvents("trash").length;
+ $("nfav").textContent=markedEvents("fav").length;$("ntrash").textContent=markedEvents("trash").length;$("nnew").textContent=newEvents().length;
  const searching=st.view==="all"&&st.qlist&&$("q").value.trim();
  $("dnav").hidden=st.view!=="all"||!!searching;
  $("srow").hidden=!searching;
  document.querySelectorAll("#wds [data-w]").forEach(b=>b.setAttribute("aria-pressed",st.wd.has(+b.dataset.w)));
- searching?renderSearch(list):st.view==="all"?renderBoard(list):renderList();
+ searching?renderSearch(list):st.view==="all"?renderBoard(list):st.view==="new"?renderNew():renderList();
  saveHash();
 }
 
@@ -471,7 +491,7 @@ function loadHash(){
  if(isD(p.get("from")))$("dfrom").value=p.get("from");
  if(isD(p.get("to")))$("dto").value=p.get("to");
  (p.get("w")||"").split("").filter(c=>/[0-6]/.test(c)).forEach(c=>st.wd.add(+c));
- if(["fav","trash"].includes(p.get("v")))st.view=p.get("v");
+ if(["fav","trash","new"].includes(p.get("v")))st.view=p.get("v");
  return p.get("s")||"";
 }
 
