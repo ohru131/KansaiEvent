@@ -249,7 +249,7 @@ const DOW=["日","月","火","水","木","金","土"];
 const LINE={"IT勉強会":"#2f6fdb","講座・セミナー":"#0e8a8a","ワークショップ":"#e07a10","交流会":"#d6336c","語学交流":"#7b4fd6","読書会":"#8a6a1f","ハイキング":"#2f9e44","教育":"#1c9bc4","アート":"#c2389a","作業会":"#6b7686","音楽":"#d63a2f"};
 const SPARE=["#3b5bdb","#5c940d","#b35c00","#0b7285","#a61e4d"];
 const $=id=>document.getElementById(id);
-const st={events:[],genres:[],sel:null,ym:null,genre:new Set(),meta:null,view:"all",qlist:false,wd:new Set()};
+const st={events:[],genres:[],sel:null,ym:null,genre:new Set(),meta:null,view:"all",qlist:false,glist:false,wd:new Set()};
 
 /* ---- お気に入り・ゴミ箱（localStorage） ----
  marks[key]={s:"fav"|"trash"|"",t:更新時刻,title,date,start,url,venue}
@@ -344,7 +344,7 @@ function renderMonth(cnt){
 }
 
 function renderLegend(){
- const c={};st.events.forEach(e=>{c[e.genre]=(c[e.genre]||0)+1});
+ const c={},t=today();st.events.forEach(e=>{if((e.date||"")>=t&&markOf(e)!=="trash")c[e.genre]=(c[e.genre]||0)+1});
  const ul=$("legend");ul.classList.toggle("filtering",st.genre.size>0);
  ul.innerHTML=st.genres.map(g=>`<li><button type="button" data-g="${esc(g)}" style="--c:${lineColor(g)}" aria-pressed="${st.genre.has(g)}"><span class="sw"></span>${esc(g)}<span class="n">${c[g]||0}</span></button></li>`).join("");
 }
@@ -418,7 +418,8 @@ function renderSearch(list){
  const md=ds=>{const [y,m,d]=parts(ds);return m+"/"+d;};
  const range=from===t&&!to?"今日以降":(from===t?"今日":md(from))+"〜"+(to?md(to):"");
  const wdl=st.wd.size?"・"+[1,2,3,4,5,6,0].filter(w=>st.wd.has(w)).map(w=>DOW[w]).join(""):"";
- let h=`<p class="listhead">「${esc(q)}」の検索結果：${range}${wdl} ${items.length}件</p>`;
+ const cond=q?`「${esc(q)}」の検索結果`:`ジャンル「${esc([...st.genre].join("・"))}」のイベント`;
+ let h=`<p class="listhead">${cond}：${range}${wdl} ${items.length}件</p>`;
  if(!items.length)h+='<div class="nothing">条件に合うイベントはありません。<br><button type="button" id="clear2">条件をクリアする</button></div>';
  h+=dayBlocks(items,"",true);
  $("board").innerHTML=h;
@@ -457,7 +458,7 @@ function render(){
  renderNow();renderStrip(cnt);renderMonth(cnt);
  document.querySelectorAll("#views [data-v]").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===st.view));
  $("nfav").textContent=markedEvents("fav").length;$("ntrash").textContent=markedEvents("trash").length;$("nnew").textContent=newEvents().length;
- const searching=st.view==="all"&&st.qlist&&$("q").value.trim();
+ const searching=st.view==="all"&&((st.qlist&&$("q").value.trim())||st.glist);
  $("dnav").hidden=st.view!=="all"||!!searching;
  $("srow").hidden=!searching;
  document.querySelectorAll("#wds [data-w]").forEach(b=>b.setAttribute("aria-pressed",st.wd.has(+b.dataset.w)));
@@ -465,12 +466,12 @@ function render(){
  saveHash();
 }
 
-function select(ds,keepMonth){st.sel=ds;st.view="all";st.qlist=false;if(!keepMonth)st.ym=ds.slice(0,7);render();}
-function clearAll(){$("q").value="";$("dfrom").value="";$("dto").value="";st.wd.clear();$("source").value="";$("free").checked=false;st.genre.clear();renderLegend();render();}
+function select(ds,keepMonth){st.sel=ds;st.view="all";st.qlist=false;st.glist=false;if(!keepMonth)st.ym=ds.slice(0,7);render();}
+function clearAll(){$("q").value="";$("dfrom").value="";$("dto").value="";st.wd.clear();$("source").value="";$("free").checked=false;st.genre.clear();st.glist=false;renderLegend();render();}
 
 function saveHash(){
  const p=new URLSearchParams();
- if(st.sel!==today()&&!(st.qlist&&$("q").value.trim()))p.set("d",st.sel);
+ if(st.sel!==today()&&!((st.qlist&&$("q").value.trim())||st.glist))p.set("d",st.sel);
  if(st.genre.size)p.set("g",[...st.genre].join(","));
  if($("source").value)p.set("s",$("source").value);
  if($("q").value.trim())p.set("q",$("q").value.trim());
@@ -486,6 +487,7 @@ function loadHash(){
  if(/^\d{4}-\d{2}-\d{2}$/.test(p.get("d")||""))st.sel=p.get("d");
  (p.get("g")||"").split(",").filter(Boolean).forEach(g=>st.genre.add(g));
  if(p.get("q")){$("q").value=p.get("q");st.qlist=!p.get("d");}
+ st.glist=st.genre.size>0&&!p.get("d");
  if(p.get("free"))$("free").checked=true;
  const isD=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||"");
  if(isD(p.get("from")))$("dfrom").value=p.get("from");
@@ -497,7 +499,7 @@ function loadHash(){
 
 $("strip").addEventListener("click",e=>{const b=e.target.closest("[data-date]");if(b)select(b.dataset.date);});
 $("mgrid").addEventListener("click",e=>{const b=e.target.closest("[data-date]");if(b)select(b.dataset.date,true);});
-$("legend").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g;st.genre.has(g)?st.genre.delete(g):st.genre.add(g);renderLegend();render();});
+$("legend").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g;st.genre.has(g)?st.genre.delete(g):st.genre.add(g);st.glist=st.genre.size>0;renderLegend();render();});
 $("views").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(b){st.view=b.dataset.v;render();}});
 $("board").addEventListener("click",e=>{
  const go=e.target.closest(".go[data-date]");if(go){select(go.dataset.date);window.scrollTo({top:$("board").offsetTop-80});return;}
