@@ -1,0 +1,66 @@
+name: Sync events.json from Drive
+
+# 毎朝10:30 (JST) に Google Drive 上の最新 events.json を取り込み、
+# 内容が変わっていればコミットして GitHub Pages へデプロイする。
+# Drive 側の更新は、毎日09:44 (JST) の同期ジョブが先に行っている前提。
+
+on:
+  schedule:
+    - cron: "30 1 * * *" # 10:30 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download latest events.json from Google Drive
+        run: |
+          curl -fL "https://drive.usercontent.google.com/download?id=1wolPpDu55EVEqhbX-Doc5Y2w03rHgDXc&export=download&authuser=0" -o events.json.new
+          python3 -c "import json; d=json.load(open('events.json.new')); print('downloaded total:', d.get('total'))"
+          mv events.json.new events.json
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- events.json; then
+            echo "events.json に変更なし（デプロイもスキップ）"
+            echo "changed=false" >> "$GITHUB_ENV"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add events.json
+            git commit -m "events.json を Drive の最新データに同期"
+            git push
+            echo "changed=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Prepare site
+        if: env.changed == 'true'
+        run: |
+          mkdir -p _site
+          cp index.html events.json .nojekyll _site/
+
+      - uses: actions/configure-pages@v5
+        if: env.changed == 'true'
+
+      - uses: actions/upload-pages-artifact@v3
+        if: env.changed == 'true'
+        with:
+          path: _site
+
+      - id: deployment
+        if: env.changed == 'true'
+        uses: actions/deploy-pages@v4
