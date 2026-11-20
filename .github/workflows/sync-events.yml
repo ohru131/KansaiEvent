@@ -1,8 +1,10 @@
 name: Sync events.json from Drive
 
 # 毎朝10:30 (JST) に Google Drive 上の最新 events.json を取り込み、
-# 内容が変わっていればコミットして GitHub Pages へデプロイする。
+# 内容が変わっていればコミットし、GitHub Pages へデプロイする。
 # Drive 側の更新は、毎日09:44 (JST) の同期ジョブが先に行っている前提。
+# デプロイは変更の有無にかかわらず毎回行う（コミット済み・未デプロイの
+# 状態を取り残さないため）。実行中のランは後続ランで取り消さない。
 
 on:
   schedule:
@@ -16,7 +18,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   sync-and-deploy:
@@ -36,31 +38,25 @@ jobs:
       - name: Commit if changed
         run: |
           if git diff --quiet -- events.json; then
-            echo "events.json に変更なし（デプロイもスキップ）"
-            echo "changed=false" >> "$GITHUB_ENV"
+            echo "events.json に変更なし（コミットはスキップ、デプロイは実施）"
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add events.json
             git commit -m "events.json を Drive の最新データに同期"
             git push
-            echo "changed=true" >> "$GITHUB_ENV"
           fi
 
       - name: Prepare site
-        if: env.changed == 'true'
         run: |
           mkdir -p _site
           cp index.html events.json .nojekyll _site/
 
       - uses: actions/configure-pages@v5
-        if: env.changed == 'true'
 
       - uses: actions/upload-pages-artifact@v3
-        if: env.changed == 'true'
         with:
           path: _site
 
       - id: deployment
-        if: env.changed == 'true'
         uses: actions/deploy-pages@v4
