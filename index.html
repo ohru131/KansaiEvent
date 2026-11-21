@@ -188,6 +188,32 @@ footer.wrap{margin:40px auto 0;border-top:1px solid var(--rule);padding:16px 0 4
 </style>
 </head>
 <body>
+<div id="gate" style="position:fixed;inset:0;z-index:9999;background:#1b2a4a;color:#fff;display:flex;align-items:center;justify-content:center;padding:20px">
+ <form id="gateForm" style="width:100%;max-width:320px;text-align:center">
+  <div style="font-size:20px;font-weight:700;margin-bottom:8px">関西イベント時刻表</div>
+  <p style="font-size:13px;opacity:.85;margin:0 0 16px">パスワードを入力してください</p>
+  <input id="gatePw" type="password" autocomplete="current-password" placeholder="パスワード" style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:none;border-radius:6px;margin-bottom:10px">
+  <button type="submit" style="width:100%;padding:12px;font-size:16px;font-weight:700;background:#fff;color:#1b2a4a;border:none;border-radius:6px;cursor:pointer">開く</button>
+  <p id="gateErr" style="display:none;color:#ffb3b0;font-size:13px;margin:12px 0 0">パスワードが違います</p>
+ </form>
+</div>
+<script>
+(function(){
+ var KEY="kansai-event-pw", HASH=143691964;
+ function h(s){var x=5381;for(var i=0;i<s.length;i++){x=((x<<5)+x+s.charCodeAt(i))|0}return x}
+ function unlock(){var g=document.getElementById("gate");if(g)g.remove();document.body.style.overflow=""}
+ var saved=null;
+ try{saved=localStorage.getItem(KEY)}catch(e){}
+ if(saved!==null&&h(saved)===HASH){unlock();return}
+ document.body.style.overflow="hidden";
+ document.getElementById("gateForm").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  var v=document.getElementById("gatePw").value;
+  if(h(v)===HASH){try{localStorage.setItem(KEY,v)}catch(e){}unlock()}
+  else{document.getElementById("gateErr").style.display="block"}
+ });
+})();
+</script>
 <header class="plate">
  <div class="wrap">
   <h1>関西イベント時刻表<small>大阪・京都・神戸ほか<span class="long">｜勉強会・講座・読書会・語学交流・ハイキング・音楽・アート</span></small></h1>
