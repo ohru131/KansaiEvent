@@ -375,7 +375,7 @@ function mapDest(e){
  const ADDR=/(?:都|道|府|県|市|区|郡|町|村)[^、,]*?[0-9０-９]/;
  const addr=(v.match(/[（(][^）)]*[）)]/g)||[]).map(x=>x.slice(1,-1)).filter(x=>ADDR.test(x)&&!/未確認|オンライン|zoom|目的地|泊|解散|徒歩|下車/i.test(x))[0];
  if(addr)return(addr.split(/[、,]/).find(x=>ADDR.test(x))||addr).trim();
- const seg=v.replace(/[（(][^）)]*[）)]/g,"").split(/[／\/＋+・]/).map(x=>x.trim().replace(/^集合[：:]/,"").replace(/集合$/,"").trim()).find(x=>x&&!ONLINE.test(x)&&!/住所未確認/.test(x));
+ const seg=v.replace(/[（(][^）)]*[）)]/g,"").replace(/[・＋+／\/]\s*(?:オンライン|zoom)\S*/gi,"").split(/[／＋]|\s[\/+]\s/).map(x=>x.trim().replace(/^集合[：:]/,"").replace(/集合$/,"").trim()).find(x=>x&&!ONLINE.test(x)&&!/住所未確認/.test(x));
  return seg||null;
 }
 function routeUrl(e){
