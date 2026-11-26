@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-24T22:51:53.519Z",
-  "total": 373,
+  "updatedAt": "2026-11-25T23:14:02.342Z",
+  "total": 371,
   "genres": [
     "IT勉強会",
     "アート",
@@ -43,14 +43,14 @@
     "さかもと五度 note",
     "まちライブラリー",
     "エンタク",
-    "ゲーテ・インスティトゥート",
+    "カフェフィロ",
     "サイエンスカフェ伊丹",
     "テマヒマ",
+    "バンドー神戸青少年科学館",
     "主催者note",
     "主催者ブログ",
     "京都大学",
     "京都大学 公式",
-    "京都大学 大学院経済学研究科",
     "京都大学・京都リサーチパーク",
     "京都大学工学研究科",
     "京都女子大学・奈良女子大学",
@@ -85,7 +85,6 @@
     "花園大学",
     "草津市観光物産協会",
     "荒村寺公式",
-    "荒村寺（伊丹禅教室）",
     "荒村寺（伊丹禅教室）公式サイト",
     "関西ハイカーズ",
     "関西広域連合",
@@ -227,285 +226,6 @@
       "id": 458
     },
     {
-      "title": "Kissako Zen and Tea Experience in English on November 25th, 2026",
-      "date": "2026-11-25",
-      "start": null,
-      "end": null,
-      "venue": "Shunkoin Temple 春光院（京都市右京区）",
-      "fee": "23,000円（税別）",
-      "genre": "仏教",
-      "source": "Peatix",
-      "url": "https://peatix.com/us/event/5143173",
-      "id": 632
-    },
-    {
-      "title": "Hiking at Minoh Falls & Katsuo-ji（autumn foliage）大阪で人気NO,1の紅葉の名所、箕面の滝＆勝尾寺ハイキング",
-      "date": "2026-11-25",
-      "start": "08:30",
-      "end": "16:15",
-      "venue": "阪急梅田駅2階中央改札外フレッズカフェ前",
-      "fee": "600円",
-      "genre": "ハイキング",
-      "source": "Meetup",
-      "url": "https://www.meetup.com/koge-meetup/events/316991759/",
-      "id": 881,
-      "added": "2026-11-19"
-    },
-    {
-      "title": "11/25(水) 水曜日の紅葉の箕面天上ヶ岳グルメハイキング",
-      "date": "2026-11-25",
-      "start": "09:00",
-      "end": "15:00",
-      "venue": "未確認",
-      "fee": "5,500円（山ごはんランチ付き）",
-      "genre": "ハイキング",
-      "source": "Facebook",
-      "url": "https://www.facebook.com/events/28787487267522644/",
-      "id": 742,
-      "added": "2026-11-17"
-    },
-    {
-      "title": "紅葉の名所巡り 大文字山と毘沙門堂門跡ハイキング",
-      "date": "2026-11-25",
-      "start": "09:30",
-      "end": "14:45",
-      "venue": "地下鉄蹴上駅集合（大文字山・毘沙門堂）",
-      "fee": "1,500円（別途拝観料1,000円）",
-      "genre": "ハイキング",
-      "source": "関西ハイカーズ",
-      "url": "https://kansai-hikers.com/course/4701/",
-      "id": 599
-    },
-    {
-      "title": "Kissako Zen and Tea Experience in English（坐禅・法話・対話、英語）",
-      "date": "2026-11-25",
-      "start": "10:00",
-      "end": "12:00",
-      "venue": "春光院（妙心寺内、京都市右京区）",
-      "fee": "23,000円（税別）",
-      "genre": "仏教",
-      "source": "Peatix",
-      "url": "https://peatix.com/us/event/5143173",
-      "id": 879,
-      "added": "2026-11-19"
-    },
-    {
-      "title": "Microsoft Ignite 2026 Recap @ 神戸ラボ",
-      "date": "2026-11-25",
-      "start": "14:00",
-      "end": null,
-      "venue": "神戸商工貿易センタービル24F（兵庫県神戸市中央区浜辺通5-1-14）",
-      "fee": "参加費不明",
-      "genre": "IT勉強会",
-      "source": "connpass",
-      "url": "https://kobelab.connpass.com/event/410600/",
-      "id": 976,
-      "added": "2026-11-22"
-    },
-    {
-      "title": "【11/25（水）『残席7名』】クリエイターSESSION vol.7 BBQを囲んで、クリエイティブを語ろう！～築280年の歴史ある空間で考える、人の心を動かす仕事とその価値～",
-      "date": "2026-11-25",
-      "start": "17:00",
-      "end": "20:00",
-      "venue": "茶吉庵",
-      "fee": "6,000円（BBQ食事代・飲み放題）",
-      "genre": "交流会",
-      "source": "Facebook",
-      "url": "https://www.facebook.com/events/1108133252044027/",
-      "id": 521
-    },
-    {
-      "title": "KOBE Japanese Conversation Cafe&Bar",
-      "date": "2026-11-25",
-      "start": "18:00",
-      "end": "21:00",
-      "venue": "英会話ジムECG",
-      "fee": "ドリンク300円〜",
-      "genre": "語学交流",
-      "source": "Meetup",
-      "url": "https://www.meetup.com/ja-JP/%e8%a8%80%e8%aa%9e%e4%ba%a4%e6%8f%9b%e3%83%9c%e3%83%bc%e3%83%89%e3%82%b2%e3%83%bc%e3%83%a0meetup%e3%82%b0%e3%83%ab%e3%83%bc%e3%83%97/events/kpqnxtyjcpbhc/",
-      "id": 659
-    },
-    {
-      "title": "第93回だいすき宝塚異業種交流会",
-      "date": "2026-11-25",
-      "start": "18:00",
-      "end": "21:00",
-      "venue": "立呑処 鳥友（宝塚）",
-      "fee": "3,000円",
-      "genre": "交流会",
-      "source": "Facebook",
-      "url": "https://www.facebook.com/events/1757104495348226/",
-      "id": 743,
-      "added": "2026-11-17"
-    },
-    {
-      "title": "Japanese × English Language Exchange in Osaka | First Event FREE",
-      "date": "2026-11-25",
-      "start": "18:00",
-      "end": "19:30",
-      "venue": "太陽ノ塔 ひや恋洋菓子店",
-      "fee": "初回無料・2回目以降600円（＋1品注文）",
-      "genre": "語学交流",
-      "source": "Meetup",
-      "url": "https://www.meetup.com/wahonnect/events/317423405/",
-      "id": 882,
-      "added": "2026-11-19"
-    },
-    {
-      "title": "読書のつどい: かもがわ読書部",
-      "date": "2026-11-25",
-      "start": "18:00",
-      "end": "19:30",
-      "venue": "ゲーテ・インスティトゥート・ヴィラ鴨川（図書室）、京都",
-      "fee": "無料",
-      "genre": "読書会",
-      "source": "ゲーテ・インスティトゥート",
-      "url": "https://www.goethe.de/ins/jp/ja/ver.cfm?event_id=27390099",
-      "id": 925,
-      "added": "2026-11-21"
-    },
-    {
-      "title": "【京都開催】Physical AI Nexus Japan in Kansai",
-      "date": "2026-11-25",
-      "start": "18:00",
-      "end": "20:30",
-      "venue": "株式会社HACARUS（京都市中京区高宮町206御池ビル8階）",
-      "fee": "無料",
-      "genre": "講座・セミナー",
-      "source": "connpass",
-      "url": "https://hacarus.connpass.com/event/413496/",
-      "id": 977,
-      "added": "2026-11-22"
-    },
-    {
-      "title": "Kyoto Language Exchange | Make Friends & Connect",
-      "date": "2026-11-25",
-      "start": "18:30",
-      "end": "21:00",
-      "venue": "Café & Bar Laurel（京都・新京極）",
-      "fee": "無料（1ドリンク要）",
-      "genre": "語学交流",
-      "source": "Meetup",
-      "url": "https://www.meetup.com/ja-JP/kansai-boardgame-friends/events/317391862/",
-      "id": 883,
-      "added": "2026-11-19"
-    },
-    {
-      "title": "Museつかってみよう！（初心者向け）",
-      "date": "2026-11-25",
-      "start": "18:30",
-      "end": "19:30",
-      "venue": "コミュニティスペース5.6（大阪市北区本庄東1-18-8）",
-      "fee": "無料",
-      "genre": "ワークショップ",
-      "source": "connpass",
-      "url": "https://dxdojo.connpass.com/event/412526/",
-      "id": 994,
-      "added": "2026-11-23"
-    },
-    {
-      "title": "Wednesday Night English Connect (Learn & Practice Conversational English)",
-      "date": "2026-11-25",
-      "start": "19:00",
-      "end": "20:30",
-      "venue": "MUSTARD SEED クリスチャン教会 京都",
-      "fee": "無料",
-      "genre": "語学交流",
-      "source": "Meetup",
-      "url": "https://www.meetup.com/kyoto-english-connect/events/317364312/",
-      "id": 522
-    },
-    {
-      "title": "マーケティング交流会【大阪・北新地】2026年11月25日 - 広報,商品戦略,データアナリスト,SNSマーケターなどが集まる交流イベント",
-      "date": "2026-11-25",
-      "start": "19:00",
-      "end": "20:30",
-      "venue": "大阪会議室 梅田北新地店 roomA（大阪市北区曽根崎2-1-12 国道ビル3階）",
-      "fee": "3,000円",
-      "genre": "交流会",
-      "source": "TECH PLAY",
-      "url": "https://techplay.jp/event/1000725",
-      "id": 614
-    },
-    {
-      "title": "夜坐",
-      "date": "2026-11-25",
-      "start": "19:00",
-      "end": "20:40",
-      "venue": "荒村寺（伊丹市）",
-      "fee": "500円",
-      "genre": "仏教",
-      "source": "荒村寺（伊丹禅教室）",
-      "url": "https://kosonji.com/itamizen/yaza",
-      "id": 621
-    },
-    {
-      "title": "opsmethod#6「DevOpsAgentをチームに迎えて運用しよう」クラスメソッド大阪オフィス",
-      "date": "2026-11-25",
-      "start": "19:00",
-      "end": "21:00",
-      "venue": "クラスメソッド大阪オフィス（大阪市中央区伏見町3-6-3）",
-      "fee": "無料",
-      "genre": "IT勉強会",
-      "source": "connpass",
-      "url": "https://classmethod.connpass.com/event/408572/",
-      "id": 978,
-      "added": "2026-11-22"
-    },
-    {
-      "title": "【オフライン開催】Kyoto Tech Talk #11",
-      "date": "2026-11-25",
-      "start": "19:00",
-      "end": "21:00",
-      "venue": "Sansan Innovation Lab（京都市中京区坂井町456）",
-      "fee": "無料",
-      "genre": "IT勉強会",
-      "source": "connpass",
-      "url": "https://sansan.connpass.com/event/410721/",
-      "id": 979,
-      "added": "2026-11-22"
-    },
-    {
-      "title": "Free English conversation class and event",
-      "date": "2026-11-25",
-      "start": "19:30",
-      "end": "21:00",
-      "venue": "The Blarney Stone Irish Pub",
-      "fee": "無料（飲食代別途）",
-      "genre": "語学交流",
-      "source": "Meetup",
-      "url": "https://www.meetup.com/osaka-english-language-meetup-at-the-blarney-stone-umeda/events/fkxhtsyjcpbhc/",
-      "id": 695,
-      "added": "2026-11-17"
-    },
-    {
-      "title": "経営学セミナー『価値転換』出版記念 オンライントークイベント",
-      "date": "2026-11-25",
-      "start": "19:30",
-      "end": "21:00",
-      "venue": "オンライン",
-      "fee": "無料",
-      "genre": "講座・セミナー",
-      "source": "京都大学 大学院経済学研究科",
-      "url": "https://www.econ.kyoto-u.ac.jp/about/seminars/47996/",
-      "id": 880,
-      "added": "2026-11-19"
-    },
-    {
-      "title": "Microsoft Ignite 2026 振り返り！Copilotのこれからを語ろう",
-      "date": "2026-11-25",
-      "start": "19:30",
-      "end": "20:00",
-      "venue": "オンライン（主催はんなりプログラミング＝京都発）",
-      "fee": "無料",
-      "genre": "IT勉強会",
-      "source": "connpass",
-      "url": "https://hannari-python.connpass.com/event/412486/",
-      "id": 1025,
-      "added": "2026-11-24"
-    },
-    {
       "title": "西の比叡山！刀出坂～東坂ルートで行く紅葉の書写山圓教寺ハイキング",
       "date": "2026-11-26",
       "start": "09:30",
@@ -555,6 +275,19 @@
       "url": "https://www.oml.city.osaka.lg.jp/key/2026/69_2026102901.html",
       "id": 995,
       "added": "2026-11-23"
+    },
+    {
+      "title": "First Hello",
+      "date": "2026-11-26",
+      "start": "10:30",
+      "end": "12:30",
+      "venue": "オンライン",
+      "fee": "参加費不明",
+      "genre": "語学交流",
+      "source": "Meetup",
+      "url": "https://www.meetup.com/ja-JP/first-hello-japanese-english-exchange/events/317246641/",
+      "id": 1066,
+      "added": "2026-11-26"
     },
     {
       "title": "琵琶湖博物館学芸員と行く！プランクトン観察＆特別解説 湖上クルーズツアー",
@@ -670,6 +403,19 @@
       "added": "2026-11-22"
     },
     {
+      "title": "#1：「生成AI、みんなどう使ってる？」",
+      "date": "2026-11-26",
+      "start": "18:00",
+      "end": "19:00",
+      "venue": "オンライン（Microsoft Base Ritsumeikan）",
+      "fee": "無料",
+      "genre": "交流会",
+      "source": "connpass",
+      "url": "https://msbase-ritsumeikan.connpass.com/event/412225/",
+      "id": 1067,
+      "added": "2026-11-26"
+    },
+    {
       "title": "11/26 - Umeda | Cheers to New Connections 🥂",
       "date": "2026-11-26",
       "start": "18:30",
@@ -707,6 +453,19 @@
       "url": "https://b3955f9a72b32bf72d9ef02673.doorkeeper.jp/events/101236",
       "id": 998,
       "added": "2026-11-23"
+    },
+    {
+      "title": "KaiRA2026年後期第1回輪読会",
+      "date": "2026-11-26",
+      "start": "18:40",
+      "end": "21:00",
+      "venue": "京都大学文学部第5講義室 京都市左京区吉田本町（対面は京大関係者のみ、オンライン参加枠あり）",
+      "fee": "無料",
+      "genre": "読書会",
+      "source": "connpass",
+      "url": "https://kaira-thesis-reading.connpass.com/event/414129/",
+      "id": 1068,
+      "added": "2026-11-26"
     },
     {
       "title": "第127回インバウンドビジネス勉強会 「インバウンド×東北」",
@@ -2202,6 +1961,32 @@
       "added": "2026-11-18"
     },
     {
+      "title": "Kansai Devmorning #6",
+      "date": "2026-11-29",
+      "start": "10:00",
+      "end": "12:00",
+      "venue": "タリーズコーヒー 大阪梅田ツインタワーズ・ノース店",
+      "fee": "無料",
+      "genre": "作業会",
+      "source": "connpass",
+      "url": "https://devmorning-kansai.connpass.com/event/414262/",
+      "id": 1069,
+      "added": "2026-11-26"
+    },
+    {
+      "title": "Japanese & English Language Exchange | Practice & Make Friends",
+      "date": "2026-11-29",
+      "start": "10:00",
+      "end": "11:00",
+      "venue": "オンライン（Zoom）",
+      "fee": "無料",
+      "genre": "語学交流",
+      "source": "Meetup",
+      "url": "https://www.meetup.com/ja-JP/tsumugu-japanese-language-international-community/events/317450418/",
+      "id": 1070,
+      "added": "2026-11-26"
+    },
+    {
       "title": "京都・美山かやぶきの里で茅刈り体験＆音楽・食を楽しむ｜カヤ・キャン美山2026",
       "date": "2026-11-29",
       "start": "10:30",
@@ -2453,6 +2238,19 @@
       "url": "https://peatix.com/us/event/5180953",
       "id": 927,
       "added": "2026-11-21"
+    },
+    {
+      "title": "サイエンスカフェ「未来の食を考える」第2回",
+      "date": "2026-11-29",
+      "start": "13:30",
+      "end": "15:00",
+      "venue": "バンドー神戸青少年科学館",
+      "fee": "700円（別途展示室入館料）",
+      "genre": "講座・セミナー",
+      "source": "バンドー神戸青少年科学館",
+      "url": "https://www.kobe-kagakukan.jp/event/article/1867",
+      "id": 1071,
+      "added": "2026-11-26"
     },
     {
       "title": "出張！憲法セミナー《神戸編》",
@@ -2711,7 +2509,8 @@
       "genre": "ハイキング",
       "source": "KANSAI HIKERS",
       "url": "https://kansai-hikers.com/course/4697/",
-      "id": 905
+      "id": 905,
+      "added": "2026-11-19"
     },
     {
       "title": "RoboNext2026",
@@ -2857,6 +2656,19 @@
       "added": "2026-11-19"
     },
     {
+      "title": "Japanese × English Language Exchange in Osaka 🇯🇵🇨🇦 | First Event FREE",
+      "date": "2026-12-02",
+      "start": "18:00",
+      "end": "19:30",
+      "venue": "太陽ノ塔 ひや恋洋菓子店（大阪市北区中崎西）",
+      "fee": "初回無料、2回目以降600円",
+      "genre": "語学交流",
+      "source": "Meetup",
+      "url": "https://www.meetup.com/ja-JP/wahonnect/events/317423405/",
+      "id": 1072,
+      "added": "2026-11-26"
+    },
+    {
       "title": "【水曜のDX道場】AIの実践的な活用。検索の新時代",
       "date": "2026-12-02",
       "start": "18:30",
@@ -2973,6 +2785,19 @@
       "added": "2026-11-19"
     },
     {
+      "title": "声に出して本を読もう",
+      "date": "2026-12-03",
+      "start": "15:00",
+      "end": "16:00",
+      "venue": "大阪市立浪速図書館 会議室",
+      "fee": "無料",
+      "genre": "読書会",
+      "source": "大阪市立図書館",
+      "url": "https://www.manabi.city.osaka.lg.jp/yoyaku/KozaEventDetailInfo.html?jigyo_cd=87683&searchmode=2&janru=17",
+      "id": 1073,
+      "added": "2026-11-26"
+    },
+    {
       "title": "KYOTO LIFE SCIENCE STARTUP 新事業創出セミナー 第4回「資金調達」",
       "date": "2026-12-03",
       "start": "16:00",
@@ -3021,7 +2846,8 @@
       "genre": "仏教",
       "source": "Peatix",
       "url": "https://peatix.com/us/event/5160739",
-      "id": 966
+      "id": 966,
+      "added": "2026-11-22"
     },
     {
       "title": "KOINの森 アイデア相談窓口（小澤 忠 氏）",
@@ -3165,6 +2991,19 @@
       "added": "2026-11-24"
     },
     {
+      "title": "第六回 唐揚げ会",
+      "date": "2026-12-04",
+      "start": "19:00",
+      "end": "21:30",
+      "venue": "SmartHR 大阪オフィス（大阪府大阪市北区大深町4-20 グランフロント大阪タワーA34階）",
+      "fee": "500円（会場払い）",
+      "genre": "IT勉強会",
+      "source": "connpass",
+      "url": "https://karaage.connpass.com/event/411618/",
+      "id": 1074,
+      "added": "2026-11-26"
+    },
+    {
       "title": "読書感想共有会～新しい発見と対話の時間～ #12",
       "date": "2026-12-04",
       "start": "20:00",
@@ -3178,6 +3017,32 @@
       "added": "2026-11-21"
     },
     {
+      "title": "臨床哲学教室 ソクラティック・ダイアローグ（SD）",
+      "date": "2026-12-05",
+      "start": null,
+      "end": null,
+      "venue": "神戸（会場詳細未確認）",
+      "fee": "参加費不明",
+      "genre": "哲学対話",
+      "source": "カフェフィロ",
+      "url": "https://makro2.jp/events/event/makro2-3423/",
+      "id": 1077,
+      "added": "2026-11-26"
+    },
+    {
+      "title": "オンライン読書会 プラトン『パイドン』 ソクラテス、最期の対話",
+      "date": "2026-12-05",
+      "start": null,
+      "end": null,
+      "venue": "オンライン",
+      "fee": "参加費不明",
+      "genre": "読書会",
+      "source": "カフェフィロ",
+      "url": "https://makro2.jp/events/event/makro2-3437/",
+      "id": 1078,
+      "added": "2026-11-26"
+    },
+    {
       "title": "大阪青雲会 例会 船山＋山の家はせがわ（京都北山）第4765回",
       "date": "2026-12-05",
       "start": "08:20",
@@ -3188,6 +3053,19 @@
       "source": "大阪青雲会",
       "url": "https://osaka-seiunkai.com/wp/wp-content/uploads/2026/11/4765yamanoiehasegawa.pdf",
       "id": 606
+    },
+    {
+      "title": "Konan Alps: A Hike at the End of Fall　晩秋の湖南アルプス ハイキング",
+      "date": "2026-12-05",
+      "start": "09:00",
+      "end": "17:40",
+      "venue": "JR京都駅 塩小路カフェ前",
+      "fee": "600円",
+      "genre": "ハイキング",
+      "source": "Meetup",
+      "url": "https://www.meetup.com/ja-JP/koge-meetup/events/317186170/",
+      "id": 1075,
+      "added": "2026-11-26"
     },
     {
       "title": "12/5土. 大阪プログラミング初心者、IT系相談の日&もくもく会 in 大阪天満橋コーボックス",
@@ -3304,6 +3182,19 @@
       "url": "https://www.oml.city.osaka.lg.jp/key/2026/72_2026092501.html",
       "id": 1050,
       "added": "2026-11-24"
+    },
+    {
+      "title": "おさべん忘年会2026",
+      "date": "2026-12-05",
+      "start": "13:30",
+      "end": "16:30",
+      "venue": "長田区文化センター 兵庫県神戸市長田区若松町5-5-1",
+      "fee": "勉強会のみ1,000円／勉強会＋懇親会5,500円（前払い）",
+      "genre": "交流会",
+      "source": "connpass",
+      "url": "https://connpass.com/event/408745/",
+      "id": 1076,
+      "added": "2026-11-26"
     },
     {
       "title": "第22回mamanonおんがくい",
@@ -3561,6 +3452,19 @@
       "added": "2026-11-24"
     },
     {
+      "title": "【昼開催】古民家もくもく会 & Coworking #21｜参加無料",
+      "date": "2026-12-06",
+      "start": "13:00",
+      "end": "17:00",
+      "venue": "UTAJIMA NOOK（大阪市西淀川区歌島3-3-43）",
+      "fee": "無料",
+      "genre": "作業会",
+      "source": "connpass",
+      "url": "https://utajima-digital-meetup.connpass.com/event/414061/",
+      "id": 1079,
+      "added": "2026-11-26"
+    },
+    {
       "title": "ダンス×美術ワークショップ「はずしていこう」",
       "date": "2026-12-06",
       "start": "13:30",
@@ -3596,6 +3500,32 @@
       "url": "https://kobe-sannomiya-dev.connpass.com/event/413245/",
       "id": 1054,
       "added": "2026-11-24"
+    },
+    {
+      "title": "洋書輪読会/Reading Circle for both Japanese and Foreign People",
+      "date": "2026-12-06",
+      "start": "14:00",
+      "end": "15:30",
+      "venue": "サイゼリヤ宇治店（JR宇治駅北約450m）",
+      "fee": "参加費不明",
+      "genre": "読書会",
+      "source": "Meetup",
+      "url": "https://www.meetup.com/ja-JP/%E6%B4%8B%E6%9B%B8%E8%BC%AA%E8%AA%AD%E4%BC%9A-english-reading-circle-for-japanese-and-foreign-people/events/317200926/",
+      "id": 1080,
+      "added": "2026-11-26"
+    },
+    {
+      "title": "PECO'S Language Exchange 🇺🇸🇯🇵🇨🇳 【First timer Entrance Free・初回参加費無料】",
+      "date": "2026-12-06",
+      "start": "15:00",
+      "end": "17:00",
+      "venue": "cafe&diner encontre（大阪市中央区南船場）",
+      "fee": "500円（初回無料）",
+      "genre": "語学交流",
+      "source": "Meetup",
+      "url": "https://www.meetup.com/ja-JP/meetup-group-dhsxqeeq/events/317545458/",
+      "id": 1081,
+      "added": "2026-11-26"
     },
     {
       "title": "How can foreigners start their business in Japan? / 外国人が日本で起業するには？",
@@ -3766,6 +3696,19 @@
       "added": "2026-11-25"
     },
     {
+      "title": "AI活用で変わる明日からできる経営術 第3回",
+      "date": "2026-12-09",
+      "start": "17:00",
+      "end": "19:30",
+      "venue": "京都経済センター3階 KOIN",
+      "fee": "無料",
+      "genre": "講座・セミナー",
+      "source": "KOIN",
+      "url": "https://open.kyoto/calendar/65051/",
+      "id": 1082,
+      "added": "2026-11-26"
+    },
+    {
       "title": "といぽん〜絵本からはじまる哲学対話 テーマ『違うまま、ともに。』",
       "date": "2026-12-09",
       "start": "18:00",
@@ -3776,6 +3719,19 @@
       "source": "Peatix",
       "url": "https://peatix.com/event/5264914",
       "id": 546
+    },
+    {
+      "title": "AWS re:Invent ふりかえり勉強会「クラスメソッド re:Growth 2026 大阪」",
+      "date": "2026-12-09",
+      "start": "18:00",
+      "end": "21:00",
+      "venue": "クラスメソッド株式会社 大阪オフィス（大阪府大阪市中央区伏見町3丁目6番3号 三菱UFJ信託銀行大阪ビル 8F）",
+      "fee": "無料",
+      "genre": "IT勉強会",
+      "source": "connpass",
+      "url": "https://classmethod.connpass.com/event/409286/",
+      "id": 1083,
+      "added": "2026-11-26"
     },
     {
       "title": "【京都・四条/五条】5分LT＋もくもく会｜みやこでIT × Digital Nomad Kyoto @ THE-IF",
@@ -3791,6 +3747,19 @@
       "added": "2026-11-25"
     },
     {
+      "title": "【大阪】KANSAI AI PUB（関西×人工知能×場）2026/12/09 #AIMTG",
+      "date": "2026-12-09",
+      "start": "19:45",
+      "end": "22:00",
+      "venue": "コミュニティスペース5.6（大阪市北区本庄東1-18-8）",
+      "fee": "一般500円（学生無料）",
+      "genre": "交流会",
+      "source": "connpass",
+      "url": "https://deep-learning-osaka.connpass.com/event/412837/",
+      "id": 1084,
+      "added": "2026-11-26"
+    },
+    {
       "title": "こんばんは寄席 by 桂枝之進",
       "date": "2026-12-09",
       "start": "20:00",
@@ -3802,6 +3771,19 @@
       "url": "https://fabcafe.com/jp/events/kyoto/goodevening_yose/",
       "id": 1064,
       "added": "2026-11-25"
+    },
+    {
+      "title": "AIミーティング 2026/12/09 #セキュリティ #MCP",
+      "date": "2026-12-09",
+      "start": "20:00",
+      "end": "21:30",
+      "venue": "オンライン",
+      "fee": "無料",
+      "genre": "IT勉強会",
+      "source": "connpass",
+      "url": "https://osaka-driven-dev.connpass.com/event/412836/",
+      "id": 1085,
+      "added": "2026-11-26"
     },
     {
       "title": "読書会『虚の伽藍』",
@@ -4532,7 +4514,8 @@
       "genre": "教育",
       "source": "エンタク",
       "url": "https://entaku.school-voice-pj.org/events/5b087b9a9ae6",
-      "id": 949
+      "id": 949,
+      "added": "2026-11-21"
     },
     {
       "title": "読書会『月の立つ林で』",
